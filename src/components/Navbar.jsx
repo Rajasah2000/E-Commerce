@@ -9,6 +9,7 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import avatar from "../data/avatar.jpg";
 import { Cart, Chat, Notification, UserProfile } from ".";
 import { useStateContext } from "../contexts/ContextProvider";
+import { Link } from "react-router-dom";
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
@@ -82,26 +83,50 @@ const Navbar = () => {
           color={currentColor}
           icon={<RiNotification3Line />}
         /> */}
-        <TooltipComponent content="Profile" position="BottomCenter">
-          <div
-            className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-            onClick={() => handleClick("userProfile")}
-          >
-            <img src={avatar} alt="user" className="rounded-full w-8 h-8 " />
-            <p>
-              <span className="text-gray-400 text-14">Hi,</span>{" "}
-              <span className="text-gray-400 font-bold ml-1 text-14">
-                Rohit
-              </span>
-            </p>
-            <MdKeyboardArrowDown className="text-gray-400 text-14" />
-          </div>
-        </TooltipComponent>
+      {/* <div className="panel panel-default metismenu vertical-nav-menu">
+              <div
+                className="panel-heading metismenu-container"
+                role="tab"
+                id="headingTwo"
+              >
+                <div className="panel-title metismenu-item">
+                  <a
+                    className="collapsed metismenu-link"
+                    role="button"
+                    data-toggle="collapse"
+                    data-parent="#accordionMenu"
+                    href="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    <i class="metismenu-icon fa-brands fa-searchengin"></i>
+                    Merchant
+                  </a>
+                </div>
+              </div>
+              <div
+                id="collapseTwo"
+                className="panel-collapse collapse"
+                role="tabpanel"
+                aria-labelledby="headingTwo"
+              >
+                <div className="panel-body">
+                  <ul className="metismenu-container">
+                    <li className="metismenu-item">
+                      <Link to="/add-marchent" className="metismenu-link">
+                        Add Merchant
+                      </Link>
+                    </li>
+                    <li className="metismenu-item">
+                      <Link to="/manage-marchent" className="metismenu-link">
+                        Manage Merchant
+                      </Link>
+                    </li>
 
-        {isClicked.cart && <Cart />}
-        {isClicked.chat && <Chat />}
-        {isClicked.notification && <Notification />}
-        {isClicked.userProfile && <UserProfile />}
+                  </ul>
+                </div>
+              </div>
+            </div> */}
       </div>
     </div>
   );

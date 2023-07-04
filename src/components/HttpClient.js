@@ -51,7 +51,7 @@ export const BASE_URL = 'http://13.127.222.180:4051/v1/admin/';
 async function requestData(url, method, params = {}) {
   let token = '';
   let user = reactLocalStorage.getObject('adminData');
-  console.log("USER" , user);
+  // console.log("USER" , user);
   if (user && user != null && Object.keys(user).length > 0) {
     token = user.token;
   }
@@ -88,7 +88,7 @@ async function requestData(url, method, params = {}) {
       redirect: 'follow',
     };
   }
-  console.log('apiUrl, requestOptions', apiUrl, requestOptions);
+  // console.log('apiUrl, requestOptions', apiUrl, requestOptions);
   return await fetch(apiUrl, requestOptions)
     .then(response => response.json())
     .then(result => {

@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import "./App.css";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import Category from "./pages/Category/Category";
+import SubCategory from "./pages/SubCategory/SubCategory";
 import {
   Ecommerce,
   Orders,
@@ -70,14 +71,15 @@ const Dashboard = () => {
         </div>
 
         <div>
-          {themeSettings && <ThemeSettings />}
+          {/* {themeSettings && <ThemeSettings />} */}
 
           <Routes>
             {/* dashboard  */}
             {/* <Route path="/" element={<Login />} /> */}
-            {/* <Route path="/" element={<Ecommerce />} /> */}
+            <Route path="/" element={<Ecommerce />} />
             <Route path="/ecommerce" element={<Ecommerce />} />
             <Route path="/category" element={<Category/>}/>
+            <Route path="/sub-category/:id" element={<SubCategory/>}/>
 
             {/* pages  */}
             <Route path="/orders" element={<Orders />} />

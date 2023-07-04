@@ -49,7 +49,7 @@ const App = () => {
           </Route>
           
 
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Toaster/>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import HttpClient from "../components/HttpClient";
 import "../pages/Login.css";
 import toast from "react-hot-toast";
@@ -11,36 +11,111 @@ const Login = () => {
   const [passError, setPassError] = useState("");
 
   const navigate = useNavigate();
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  const emailValidation =() => {
+    if (userEmail === "") {
+      setEmailError("Email Field cannot be blank.");
+    } else if (userEmail != "" && !userEmail.match(mailformat)) {
+      setEmailError("Please enter valid email");
+    } else {
+      setEmailError("");
+    }
+  }
+
+  const passwordValidation = () => {
+    if(password === ""){
+      setPassError("Password Field Cannot be blank");
+    }else if(password != "" && password.length < 6) {
+      setPassError(
+        'Password length must be 6 characters or more'
+      );
+    } else {
+      setPassError("");
+    }
+  }
+
+  const validation = useMemo(() => {
+    if(
+        userEmail != '' &&
+        password != '' &&
+        userEmail.match(mailformat) &&
+        password.length >= 6 &&
+        emailError == "" &&
+        passError == ""
+
+    ){
+      return true;
+    }else{
+      return false;
+    }
+  },[userEmail , password , emailError , passError])
 
   const onsubmit = async (e) => {
     e.preventDefault();
+
     let data = {
       email: userEmail,
       password: password,
     };
-    let result = await HttpClient.requestData("login", "POST", data);
-    console.log("UserData", result);
-    // if(userEmail && password){
-    if (result && result.status) {
-      let auth = {
-        loginStatus: true,
-        token: result.data.token,
-      };
 
-      setEmailError("");
-      setPassError("");
-      toast.success(result.message);
-      reactLocalStorage.setObject("adminData", auth);
-      setUserEmail("");
-      setPassword("");
-      navigate("/ecommerce");
-    } else {
-      setEmailError(result?.error?.email?.message);
-      setPassError(result?.error?.password?.message);
-      //    {result?.message ? toast.error(result.message): null}
-      console.log("LOG", result);
-      toast.error(result.message || "All fields required");
+    if(validation){
+      let result = await HttpClient.requestData("login", "POST", data);
+      if (result && result.status) {
+
+        let auth = {
+          loginStatus: true,
+          token: result.data.token,
+        };
+  
+
+        toast.success(result.message);
+        reactLocalStorage.setObject("adminData", auth);
+        reactLocalStorage.set("loginStatus",true);
+        setUserEmail("");
+        setPassword("");
+        window.location.href="/"
+      } else {
+
+         toast.error(result.message);
+
+      }
+    }else{
+      emailValidation();
+      passwordValidation();
     }
+    // if(passError=="" && emailError =="" ){
+      // let data = {
+      //   email: userEmail,
+      //   password: password,
+      // };
+    //   let result = await HttpClient.requestData("login", "POST", data);
+    //   console.log("UserData", result);
+    //   // if(userEmail && password){
+      // if (result && result.status) {
+      //   let auth = {
+      //     loginStatus: true,
+      //     token: result.data.token,
+      //   };
+  
+      //   setEmailError("");
+      //   setPassError("");
+      //   toast.success(result.message);
+      //   reactLocalStorage.setObject("adminData", auth);
+      //   reactLocalStorage.set("loginStatus",true)
+      //   setUserEmail("");
+      //   setPassword("");
+      //   // navigate("/ecommerce");
+      //   window.location.href="/"
+      // } else {
+      //   setEmailError(result?.error?.email?.message);
+      //   setPassError(result?.error?.password?.message);
+      //   //    {result?.message ? toast.error(result.message): null}
+      //   console.log("LOG", result);
+      //   toast.error(result.message || "All fields required");
+      // }
+    // }
+ 
     // }else{
     //     toast.error("All Fields Are Required")
     // }
@@ -74,7 +149,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {passError && <p className="error-login fade-in">{passError}</p>}
-          <button onClick={onsubmit} className="btn-login">
+          <button  onClick={onsubmit} className="btn-login">
             LOGIN
           </button>
         </form>
