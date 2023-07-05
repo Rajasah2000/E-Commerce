@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
@@ -8,11 +9,31 @@ import PopupState from "@mui/icons-material";
 
 import { links } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
+import { itemClick } from "@syncfusion/ej2/treemap";
 
 const Sidebar = () => {
   const [show, setShow] = useState({ heading: false });
+
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   console.log("LOcation" , location.pathname);
+  // })
+
+  const checking = () =>{
+    console.log("Location" , location.pathname);
+    if(location.pathname == '/category' || location.pathname == '/manage-category'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  const [toggle , setToggle] = useState(checking);
+  const [toggle1 , setToggle1] = useState(false)
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
     useStateContext();
+
+
 
   const handleCloseSidebar = () => {
     if (activeMenu && screenSize <= 900) {
@@ -27,6 +48,24 @@ const Sidebar = () => {
       update[a] = !update[a]
       return {...update}
     })
+  }
+
+  const dropdownClickHandler = () => {
+    setToggle(!toggle);
+    // if(!toggle){
+    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: rgb(3, 201, 215);';
+    // }else{
+    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: #FFFFFF';
+    // }
+  }
+
+  const  dropdownClickHandler1 = () => {
+    setToggle1(!toggle1);
+    // if(!toggle1){
+    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: rgb(3, 201, 215);';
+    // }else{
+    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: #FFFFFF';
+    // }
   }
 
   const activeLink =
@@ -82,56 +121,6 @@ const Sidebar = () => {
               </div>
             ))} */}
 
-            {/* <div className="panel panel-default metismenu vertical-nav-menu">
-              <div
-                className="panel-heading metismenu-container"
-                role="tab"
-                id="headingTwentySeven"
-              >
-                <div className="panel-title metismenu-item">
-                  <a
-                    className="collapsed metismenu-link"
-                    role="button"
-                    data-toggle="collapse"
-                    data-parent="#accordionMenu"
-                    href="#collapseTwentySeven"
-                    aria-expanded="true"
-                    aria-controls="collapseTwentySeven"
-                  >
-               
-                    <i
-                      class="metismenu-icon fa fa-users"
-                      aria-hidden="true"
-                    ></i>
-                    Activity Participants
-                  </a>
-                </div>
-              </div>
-              <div
-                id="collapseTwentySeven"
-                className="panel-collapse collapse"
-                role="tabpanel"
-                aria-labelledby="headingTwentySeven"
-              >
-                <div className="panel-body">
-                  <ul className="metismenu-container">
-                    <li className="metismenu-item">
-                      <Link to="/add-participants" className="metismenu-link">
-                        Add Participants
-                      </Link>
-                    </li>
-                    <li className="metismenu-item">
-                      <Link
-                        to="/manage-participants"
-                        className="metismenu-link"
-                      >
-                        Manage Participants
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div> */}
-            {/* </div> */}
             {/* <PopupState variant="popover" popupId="demo-popup-menu">
   {(popupState) => (
     <React.Fragment>
@@ -146,6 +135,9 @@ const Sidebar = () => {
     </React.Fragment>
   )}
 </PopupState>  */}
+
+
+{/* 
             <div>
               <div style={{ cursor:'pointer' }} name='heading' onClick={clickHandler}>Category</div>
 
@@ -156,7 +148,59 @@ const Sidebar = () => {
                 </div>
               )}
             </div>
+            <div>
+              <div style={{ cursor:'pointer' }} name='heading' onClick={clickHandler}>SubCategory</div>
+
+              {show.heading && (
+                <div style={{ display: "flex" , flexDirection:'column'}}>
+                  <Link>Add Category</Link>
+                  <Link>Manage Category</Link>
+                </div>
+              )}
+            </div> */}
+
+
+            <div>
+              <div onClick={dropdownClickHandler} className={`siteBarDiv ${toggle ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >Category </div>
+                {toggle ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/category'}  className="linkAn">Add Category</Link>
+                    <Link to={'/manage-category'}className="linkAn">Manage Category</Link>
+                  </div> : null}
+            </div>
+
+            <div>
+              <div onClick={dropdownClickHandler1} className={`siteBarDiv ${toggle1 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >SubCategory </div>
+                {toggle1 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle1 ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/category'} onClick={() => setToggle1(false)} className="linkAn">Add SubCategory</Link>
+                    <Link className="linkAn">Manage SubCategory</Link>
+                  </div> : null}
+            </div>
+            
+
           </div>
+          
         </>
       )}
     </div>

@@ -145,7 +145,8 @@ async function fileUplodeDynamic(
 
 async function fileUplode(url, method, file, object_get = {}, tokenCustom = null) {
   let token = '';
-  let user = reactLocalStorage.getObject('userData');
+  let user = reactLocalStorage.getObject('adminData');
+  // console.log("UserToken", user.token);
   if (user && user != null && Object.keys(user).length > 0) {
     token = user.token;
   }
@@ -166,7 +167,7 @@ async function fileUplode(url, method, file, object_get = {}, tokenCustom = null
     // "Content-Type": "multipart/form-data",
     // "Access-Control-Allow-Origin": "http://13.127.101.102:5008",
     authorization: toooo,
-    userType: 'User',
+    userType: 'Admin',
     // 'Authorization': 'Bearer ' + login_status,
   };
 

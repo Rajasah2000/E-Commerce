@@ -7,7 +7,9 @@ import { useLocation } from "react-router-dom";
 import "./App.css";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import Category from "./pages/Category/Category";
+import ManageCategory from "./pages/Category/ManageCategory";
 import SubCategory from "./pages/SubCategory/SubCategory";
+import EditCategory from "./pages/Category/EditCategory";
 import {
   Ecommerce,
   Orders,
@@ -79,6 +81,9 @@ const Dashboard = () => {
             <Route path="/" element={<Ecommerce />} />
             <Route path="/ecommerce" element={<Ecommerce />} />
             <Route path="/category" element={<Category/>}/>
+            <Route path="/manage-category" element={<ManageCategory/>}/>
+            <Route path="/edit-category" element={<EditCategory/>}/>
+            
             <Route path="/sub-category/:id" element={<SubCategory/>}/>
 
             {/* pages  */}
