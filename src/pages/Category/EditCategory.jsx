@@ -81,6 +81,8 @@ const EditCategory = () => {
                 toast.success(result.message);
                 setCategoryName('');
                 setImage('');
+                let file = document.querySelector("#images");
+                file.value = "";
             }else{
                 toast.error(result.message);
                 setViewLoader(false)

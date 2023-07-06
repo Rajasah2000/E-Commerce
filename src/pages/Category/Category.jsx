@@ -123,7 +123,7 @@ const Category = () => {
             variant="filled"
           />
 
-          {image && <img style={{ height: "30%", width: "30%" }} src={image} />}
+          {image && <img style={{ height: "30%", width: "30%" , borderRadius:'9px' }} src={image} />}
       
             <LoginButton variant="contained" onClick={addCategory}>
               Add Category

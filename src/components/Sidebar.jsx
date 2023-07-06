@@ -22,14 +22,30 @@ const Sidebar = () => {
 
   const checking = () =>{
     console.log("Location" , location.pathname);
-    if(location.pathname == '/category' || location.pathname == '/manage-category'){
+    if(location.pathname == '/category' || location.pathname == '/manage-category' ){
       return true;
     }else{
       return false;
     }
   }
+
+const checking1 = () => {
+  if(location.pathname == '/sub-category' || location.pathname =="/manage-sub-category"){
+    return true;
+  }else{
+    return false;
+  }
+}
+const checking2 = () => {
+  if(location.pathname == '/add-sub-sub-category' || location.pathname =="/manage-sub-sub-category"){
+    return true;
+  }else{
+    return false;
+  }
+}
   const [toggle , setToggle] = useState(checking);
-  const [toggle1 , setToggle1] = useState(false)
+  const [toggle1 , setToggle1] = useState(checking1);
+  const [toggle2 , setToggle2] = useState(checking2);
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
     useStateContext();
 
@@ -40,33 +56,7 @@ const Sidebar = () => {
       setActiveMenu(false);
     }
   };
-  const clickHandler = (e) => {
-    // console.log(e.target.getAttribute('name'));
-    let a = e.target.getAttribute('name')
-    setShow(prev => {
-      let update = {...prev}
-      update[a] = !update[a]
-      return {...update}
-    })
-  }
 
-  const dropdownClickHandler = () => {
-    setToggle(!toggle);
-    // if(!toggle){
-    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: rgb(3, 201, 215);';
-    // }else{
-    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: #FFFFFF';
-    // }
-  }
-
-  const  dropdownClickHandler1 = () => {
-    setToggle1(!toggle1);
-    // if(!toggle1){
-    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: rgb(3, 201, 215);';
-    // }else{
-    //   document.querySelector('.siteBarDiv').style.cssText+='background-color: #FFFFFF';
-    // }
-  }
 
   const activeLink =
     " flex items-center gap-5 pl-4 py-2.5 rounded-lg text-white text-md m-2 ";
@@ -161,7 +151,7 @@ const Sidebar = () => {
 
 
             <div>
-              <div onClick={dropdownClickHandler} className={`siteBarDiv ${toggle ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+              <div onClick={() => setToggle(!toggle)} className={`siteBarDiv ${toggle ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
                 <div name='heading'  >Category </div>
                 {toggle ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
@@ -180,7 +170,7 @@ const Sidebar = () => {
             </div>
 
             <div>
-              <div onClick={dropdownClickHandler1} className={`siteBarDiv ${toggle1 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+              <div onClick={() => setToggle1(!toggle1)} className={`siteBarDiv ${toggle1 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
                 <div name='heading'  >SubCategory </div>
                 {toggle1 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
@@ -193,11 +183,29 @@ const Sidebar = () => {
 
               </div>
               {toggle1 ? <div style={{marginTop: '5px'}}>
-                    <Link  to={'/category'} onClick={() => setToggle1(false)} className="linkAn">Add SubCategory</Link>
-                    <Link className="linkAn">Manage SubCategory</Link>
+                    <Link  to= {'/sub-category'} className="linkAn">Add SubCategory</Link>
+                    <Link to={'/manage-sub-category'} className="linkAn">Manage SubCategory</Link>
                   </div> : null}
             </div>
             
+            <div>
+              <div onClick={() => setToggle2(!toggle2)} className={`siteBarDiv ${toggle2 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >SubSubCategory </div>
+                {toggle2 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle2 ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/add-sub-sub-category'}  className="linkAn">Add SubSubCategory</Link>
+                    <Link to={'/manage-sub-sub-category'}className="linkAn">Manage SubSubCategory</Link>
+                  </div> : null}
+            </div>
 
           </div>
           

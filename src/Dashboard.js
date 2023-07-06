@@ -10,6 +10,11 @@ import Category from "./pages/Category/Category";
 import ManageCategory from "./pages/Category/ManageCategory";
 import SubCategory from "./pages/SubCategory/SubCategory";
 import EditCategory from "./pages/Category/EditCategory";
+import ManageSubCategory from "./pages/SubCategory/ManageSubCategory";
+import AddSubSubCategory from "./pages/SubSubCategory/AddSubSubCategory";
+import ManageSubSubCategory from "./pages/SubSubCategory/ManageSubSubCategory";
+import EditSubCategory from "./pages/SubCategory/EditSubCategory";
+import EditSubSubCategory from "./pages/SubSubCategory/EditSubSubCategory";
 import {
   Ecommerce,
   Orders,
@@ -84,7 +89,15 @@ const Dashboard = () => {
             <Route path="/manage-category" element={<ManageCategory/>}/>
             <Route path="/edit-category" element={<EditCategory/>}/>
             
-            <Route path="/sub-category/:id" element={<SubCategory/>}/>
+            <Route path="/sub-category" element={<SubCategory/>}/>
+            <Route path="/manage-sub-category" element={<ManageSubCategory/>}/>
+            <Route path="/edit-sub-category" element={<EditSubCategory/>}/>
+
+            
+            <Route path="/add-sub-sub-category" element={<AddSubSubCategory/>}/>
+            <Route path="/manage-sub-sub-category" element={<ManageSubSubCategory/>}/>
+            <Route path="/edit-sub-sub-category" element={<EditSubSubCategory/>}/>
+            
 
             {/* pages  */}
             <Route path="/orders" element={<Orders />} />

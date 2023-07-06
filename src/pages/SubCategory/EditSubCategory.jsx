@@ -5,6 +5,7 @@ import { TextField, styled, Box, Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast'
 import HttpClient from '../../components/HttpClient';
+import { useLoaderData, useLocation } from 'react-router-dom';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -23,14 +24,18 @@ const LoginButton = styled(Button)`
   height: 48px;
   border-radius: 2px;
 `;
+const EditSubCategory = () => {
 
-const SubCategory = () => {
+
     const [subCategoryName , setSubCategoryName]= useState('');
     const [categoryData , setCategorydata] = useState([]);
     // const [category , setCategory] = useState('')
     const [categoryId , setCategoryId] = useState('');
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
+    const [ id , setId] = useState('')
+
+    const location = useLocation();
 
     const imageHandler = async (e) => {
         let file = e.target.files[0];
@@ -47,8 +52,20 @@ const SubCategory = () => {
         }
     }
 
-    // const { id} = useParams();
-    const addsubCategory = async() => {
+    useEffect(() => {
+
+        fetchCategoryData();
+        
+        if(location.pathname === '/edit-sub-category'){
+            setSubCategoryName(location?.state?.subcatName);
+            setCategoryId(location?.state?.categoryID);
+            setImage(location?.state?.image);
+            setId(location?.state?._id);
+        }
+
+    },[]);
+
+    const editsubCategory = async() => {
         let data = {
             categoryID:categoryId,
             subcatName:subCategoryName,
@@ -56,16 +73,16 @@ const SubCategory = () => {
         }
         console.log("SubCategoryData" , data);
 
-        
+        let endpoint = `updateSubCategory/${id}`
         
         if(categoryId && subCategoryName && image){
-          let result = await HttpClient.requestData("addSubCategory", "POST" , data);
-          console.log("Result" , result);
+          let result = await HttpClient.requestData(endpoint, "PUT" , data);
+          console.log("EditResult" , result);
           if(result && result.status){
             toast.success(result.message);
             setCategoryId('');
             setSubCategoryName('');
-            setImage('')
+            setImage('');
             let file = document.querySelector("#images");
             file.value = "";
           }else{
@@ -77,11 +94,6 @@ const SubCategory = () => {
 
     }
 
-    useEffect(() => {
-        fetchCategoryData();
-
-    },[]);
-
     const fetchCategoryData = async() => {
       let result  = await HttpClient.requestData("viewCategory", "GET");
       console.log("CategoryData" , result);
@@ -92,10 +104,11 @@ const SubCategory = () => {
       }
     }
 
+
   return (
     <>
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-            <Header title="Add SubCategory" />
+            <Header title="Edit SubCategory" />
             <Wrapper>
             {/* <label for="cars">Choose a category:</label> */}
   <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
@@ -112,8 +125,8 @@ const SubCategory = () => {
           <TextField style={{paddingBottom: '11px'}} type="file" id="images" onChange={imageHandler}  variant="filled" />
 
           {image && <img style={{ height: '30%', width: '30%' , borderRadius:'9px' }} src={image} />}
-          <LoginButton variant="contained" onClick={addsubCategory}>
-            Add SubCategory
+          <LoginButton variant="contained" onClick={editsubCategory}>
+            Edit SubCategory
           </LoginButton>
         </Wrapper>
         </div>
@@ -121,4 +134,4 @@ const SubCategory = () => {
   )
 }
 
-export default SubCategory;
+export default EditSubCategory
