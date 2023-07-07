@@ -34,6 +34,9 @@ const AddSubSubCategory = () => {
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
 
+    const [hide , setHide] = useState(true);
+    const [hide1 , setHide1] = useState(true);
+
     const imageHandler = async (e) => {
         let file = e.target.files[0];
         let data = new FormData();
@@ -103,13 +106,23 @@ const AddSubSubCategory = () => {
       }
     }
 
+    const handleCategory = (e) => {
+      setCategoryId(e.target.value);
+      {categoryId === "" ? setHide(false) : setHide(true)}
+    }
+
+    const handleSubCategory = (e) => {
+      setSubCategoryId(e.target.value);
+      { subCategoryId === "" ? setHide1(false) : setHide1(true)}
+    }
+
   return (
    <>
    <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Add SubSubCategory" />
             <Wrapper>
             {/* <label for="cars">Choose a category:</label> */}
-  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} id="category" name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
+  <select style={{height: '58px' , borderRadius:'5px', cursor:'pointer' , marginBottom:'24px'}} id="category" name="category" value={categoryId} onChange={(e)=> handleCategory(e)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
       return(
@@ -118,7 +131,7 @@ const AddSubSubCategory = () => {
     })}
     
   </select>
-  <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category" value={subCategoryId} onChange={(e)=> setSubCategoryId(e.target.value)}>
+  <select style={{height: '58px' , cursor:'pointer' ,  borderRadius:'5px'}} id="category" name="category" disabled={hide} value={subCategoryId} onChange={(e)=> handleSubCategory(e)}>
     <option value={''}>Select a SubCategory.......</option>
     {subCategoryData.map((item) => {
       return(
@@ -127,9 +140,9 @@ const AddSubSubCategory = () => {
     })}
     
   </select>
-            <TextField type="text"  label="SubSubCategory Name" value={subSubCategoryName} variant="filled" onChange={(e) => setSubSubCategoryName(e.target.value)} />
+            <TextField type="text"  label="SubSubCategory Name" disabled={hide1}  value={subSubCategoryName} variant="filled" onChange={(e) => setSubSubCategoryName(e.target.value)} />
 
-          <TextField style={{paddingBottom: '11px'}} type="file" id="images" onChange={imageHandler}  variant="filled" />
+          <TextField style={{paddingBottom: '11px'}} disabled={hide1}  type="file" id="images" onChange={imageHandler}  variant="filled" />
 
           {image && <img style={{ height: '30%', width: '30%' , borderRadius:'9px' }} src={image} />}
           <LoginButton variant="contained" onClick={addsubSubCategory}>

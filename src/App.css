@@ -67,7 +67,9 @@
   flex-direction: row;
 }
 .handleSidebar {
-  background-color: rgb(3, 201, 215)
+  background-color: rgb(3, 201, 215);
+  color: white;
+  
 }
 
 /* .handleSidebars {

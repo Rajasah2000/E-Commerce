@@ -34,6 +34,7 @@ const EditSubSubCategory = () => {
     const [subCategoryId , setSubCategoryId] = useState('');
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
+    const [id , setId] = useState('')
 
     const location = useLocation();
 
@@ -55,11 +56,13 @@ const EditSubSubCategory = () => {
     useEffect(() => {
         fetchCategoryData();
         fetchSubCategoryData();
+        console.log("Location", location.state);
         if(location.pathname === '/edit-sub-sub-category'){
-            setCategoryId(location?.state?.CategoryData?.catName);
-            setSubCategoryId(location?.state?.SubcategoryData?.subcatName);
+            setCategoryId(location?.state?.categoryID);
+            setSubCategoryId(location?.state?.subCategoryID);
             setSubSubCategoryName(location?.state?.subSubCatName);
-            setImage(location?.state?.img)
+            setImage(location?.state?.img);
+            setId(location?.state?._id)
         }
     },[]);
 
@@ -82,24 +85,25 @@ const EditSubSubCategory = () => {
         }
         
         console.log("data" , data);
-        // if(categoryId && subCategoryId && subSubCategoryName && image){
-        //   let result = await HttpClient.requestData("addSubSubCategory", "POST" , data);
-        //   console.log("ResultSUBSUB" , result);
-        //   if(result && result?.status){
+        let endpoint = `updateSubSubCategory/${id}`
+        if(categoryId && subCategoryId && subSubCategoryName && image){
+          let result = await HttpClient.requestData(endpoint, "PUT" , data);
+          console.log("ResultSUBSUB" , result);
+          if(result && result?.status){
 
-        //     toast.success(result.message);
-        //     setCategoryId('');
-        //     setSubCategoryId('');
-        //     setSubSubCategoryName('');
-        //     setImage('')
-        //     let file = document.querySelector("#images");
-        //     file.value = "";
-        //   }else{
-        //     toast.error("Failed to add subSubCategory data")
-        //   }
-        // }else{
-        //   toast.error("All Fields Are Required");
-        // }
+            toast.success(result?.message);
+            setCategoryId('');
+            setSubCategoryId('');
+            setSubSubCategoryName('');
+            setImage('');
+            let file = document.querySelector("#images");
+            file.value = "";
+          }else{
+            toast.error("Failed to add subSubCategory data")
+          }
+        }else{
+          toast.error("All Fields Are Required");
+        }
 
     }
 
@@ -118,7 +122,7 @@ const EditSubSubCategory = () => {
             <Header title="Edit SubSubCategory" />
             <Wrapper>
             {/* <label for="cars">Choose a category:</label> */}
-  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} id="category" name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
+  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}}  name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
       return(
@@ -127,7 +131,7 @@ const EditSubSubCategory = () => {
     })}
     
   </select>
-  <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category" value={subCategoryId} onChange={(e)=> setSubCategoryId(e.target.value)}>
+  <select style={{height: '58px' , borderRadius:'5px'}}  name="suvcategory" value={subCategoryId} onChange={(e)=> setSubCategoryId(e.target.value)}>
     <option value={''}>Select a SubCategory.......</option>
     {subCategoryData.map((item) => {
       return(

@@ -15,6 +15,17 @@ import AddSubSubCategory from "./pages/SubSubCategory/AddSubSubCategory";
 import ManageSubSubCategory from "./pages/SubSubCategory/ManageSubSubCategory";
 import EditSubCategory from "./pages/SubCategory/EditSubCategory";
 import EditSubSubCategory from "./pages/SubSubCategory/EditSubSubCategory";
+import AddProduct from "./pages/Product/AddProduct";
+import ManageProduct from "./pages/Product/ManageProduct";
+
+import AddColor from "./pages/Color/AddColor";
+import ManageColor from "./pages/Color/ManageColor";
+import EditColor from "./pages/Color/EditColor";
+
+import AddBrand from "./pages/Brand/AddBrand";
+import ManageBrand from "./pages/Brand/ManageBrand";
+import EditBrand from "./pages/Brand/EditBrand";
+
 import {
   Ecommerce,
   Orders,
@@ -85,6 +96,7 @@ const Dashboard = () => {
             {/* <Route path="/" element={<Login />} /> */}
             <Route path="/" element={<Ecommerce />} />
             <Route path="/ecommerce" element={<Ecommerce />} />
+
             <Route path="/category" element={<Category/>}/>
             <Route path="/manage-category" element={<ManageCategory/>}/>
             <Route path="/edit-category" element={<EditCategory/>}/>
@@ -97,7 +109,19 @@ const Dashboard = () => {
             <Route path="/add-sub-sub-category" element={<AddSubSubCategory/>}/>
             <Route path="/manage-sub-sub-category" element={<ManageSubSubCategory/>}/>
             <Route path="/edit-sub-sub-category" element={<EditSubSubCategory/>}/>
+
             
+            <Route path="/add-color" element={<AddColor/>}/>
+            <Route path="/manage-color" element={<ManageColor/>}/>
+            <Route path="/edit-color" element={<EditColor/>}/>
+
+            <Route path="/add-brand" element={<AddBrand/>}/>
+            <Route path="/manage-brand" element={<ManageBrand/>}/>
+            <Route path="/edit-brand" element={<EditBrand/>}/>
+            
+            
+            <Route path="/add-product" element={<AddProduct/>}/>
+            <Route path="/manage-product" element={<ManageProduct/>}/>
 
             {/* pages  */}
             <Route path="/orders" element={<Orders />} />

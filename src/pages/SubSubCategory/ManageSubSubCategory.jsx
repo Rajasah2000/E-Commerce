@@ -29,7 +29,9 @@ const ManageSubSubCategory = () => {
                     categoryName:item?.CategoryData?.catName,
                     subCategoryName:item?.SubcategoryData?.subcatName,
                     subSubCategoryName:item?.subSubCatName,
-                    subSubCategoryImage:item?.img,
+                    subSubCategoryImage:(
+                        <img style={{ height: '40%', width: '40%' , borderRadius:'14px' , margin:"5px" }} src={item?.img} />
+                    ),
                     action:(
                         <div style={{ display: 'flex' , flexDirection:'coloum' }}>
                         <svg onClick={() => onEdit(item)} style={{ height:'54px' , width:'30px', cursor:'pointer'  , marginRight:'34px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

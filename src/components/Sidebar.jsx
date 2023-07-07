@@ -43,9 +43,37 @@ const checking2 = () => {
     return false;
   }
 }
+
+const checking3 = () => {
+  if(location.pathname == '/add-product' || location.pathname =="/manage-product"){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+const checking4 = () => {
+  if(location.pathname == '/add-color' || location.pathname =="/manage-color"){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+const checking5 = () => {
+  if(location.pathname == '/add-brand' || location.pathname =="/manage-brand"){
+    return true;
+  }else{
+    return false;
+  }
+}
+
   const [toggle , setToggle] = useState(checking);
   const [toggle1 , setToggle1] = useState(checking1);
   const [toggle2 , setToggle2] = useState(checking2);
+  const [toggle3 , setToggle3] = useState(checking3);
+  const [toggle4 , setToggle4] = useState(checking4);
+  const [toggle5 , setToggle5] = useState(checking5)
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
     useStateContext();
 
@@ -204,6 +232,65 @@ const checking2 = () => {
               {toggle2 ? <div style={{marginTop: '5px'}}>
                     <Link  to={'/add-sub-sub-category'}  className="linkAn">Add SubSubCategory</Link>
                     <Link to={'/manage-sub-sub-category'}className="linkAn">Manage SubSubCategory</Link>
+                  </div> : null}
+            </div>
+
+
+
+            <div>
+              <div onClick={() => setToggle4(!toggle4)} className={`siteBarDiv ${toggle4 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >Color </div>
+                {toggle3 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle4 ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/add-color'}  className="linkAn">Add Color</Link>
+                    <Link to={'/manage-color'}className="linkAn">Manage Color</Link>
+                  </div> : null}
+            </div>
+
+            <div>
+              <div onClick={() => setToggle5(!toggle5)} className={`siteBarDiv ${toggle5 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >Brand </div>
+                {toggle5 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle5 ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/add-brand'}  className="linkAn">Add Brand</Link>
+                    <Link to={'/manage-brand'}className="linkAn">Manage Brand</Link>
+                  </div> : null}
+            </div>
+
+            <div>
+              <div onClick={() => setToggle3(!toggle3)} className={`siteBarDiv ${toggle3 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >Product </div>
+                {toggle3 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle3 ? <div style={{marginTop: '5px'}}>
+                    <Link  to={'/add-product'}  className="linkAn">Add Product</Link>
+                    <Link to={'/manage-product'}className="linkAn">Manage Product</Link>
                   </div> : null}
             </div>
 

@@ -29,6 +29,7 @@ const SubCategory = () => {
     const [categoryData , setCategorydata] = useState([]);
     // const [category , setCategory] = useState('')
     const [categoryId , setCategoryId] = useState('');
+    const [hide , setHIde] = useState(true);
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
 
@@ -92,13 +93,18 @@ const SubCategory = () => {
       }
     }
 
+    const handleCategoryId = (e) => {
+      setCategoryId(e.target.value);
+      {categoryId === "" ? setHIde(false) : setHIde(true)}
+    }
+
   return (
     <>
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Add SubCategory" />
             <Wrapper>
             {/* <label for="cars">Choose a category:</label> */}
-  <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
+  <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category"  value={categoryId}  onChange={(e)=> handleCategoryId(e)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
       return(
@@ -107,9 +113,9 @@ const SubCategory = () => {
     })}
     
   </select>
-            <TextField type="text"  label="SubCategory Name" value={subCategoryName} variant="filled" onChange={(e) => setSubCategoryName(e.target.value)} />
+            <TextField type="text"  label="SubCategory Name" disabled={hide} value={subCategoryName} variant="filled"  onChange={(e) => setSubCategoryName(e.target.value)} />
 
-          <TextField style={{paddingBottom: '11px'}} type="file" id="images" onChange={imageHandler}  variant="filled" />
+          <TextField style={{paddingBottom: '11px'}} disabled={hide} type="file" id="images" onChange={imageHandler}  variant="filled" />
 
           {image && <img style={{ height: '30%', width: '30%' , borderRadius:'9px' }} src={image} />}
           <LoginButton variant="contained" onClick={addsubCategory}>
