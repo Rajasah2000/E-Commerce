@@ -42,6 +42,7 @@ const App = () => {
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
+        <Toaster/>
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoutes/>}>
@@ -51,7 +52,6 @@ const App = () => {
 
           <Route path="/login" element={<Login />} />
         </Routes>
-        <Toaster/>
       </BrowserRouter>
     </div>
   );

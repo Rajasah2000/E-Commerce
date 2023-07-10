@@ -15,8 +15,8 @@ const UserProfile = () => {
 
   const logOut = () => {
     reactLocalStorage.remove('adminData');
-    reactLocalStorage.remove('loginStatus')
-    navigate('/login')
+    reactLocalStorage.remove('loginStatus');
+    navigate('/login');
   }
 
   return (

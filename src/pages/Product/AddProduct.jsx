@@ -30,6 +30,7 @@ const AddProduct = () => {
     const [subSubCategoryData , setSubSubCategoryData] = useState([]);
     const [colorData , setColorData] = useState([]);
     const [brandData , setBrandData] = useState([]);
+    const [variantData , setVarientData] = useState([])
 
     const [productName , setProductName]= useState('');
     const [image , setImage] = useState('');
@@ -45,7 +46,14 @@ const AddProduct = () => {
     const [hide1 , setHide1] = useState(true);
     const [hide3 , setHide3] = useState(true);
 
-    const [discountPrice , setDiscountPrice] = useState('')
+    const [discountPrice , setDiscountPrice] = useState('');
+    const [weight , setWeight] = useState('');
+
+    const [Price , setPrice] = useState();
+    const [quantity , setQuantity] = useState();
+
+
+
 
     // const [preview , setPreview] = useState('');
   
@@ -71,6 +79,7 @@ const AddProduct = () => {
         fetchSubSubCategory();
         fetchColorData();
         fetchBrandData();
+        fetchVarient()
     },[]);
 
     const fetchCategoryData = async() => {
@@ -134,6 +143,16 @@ const AddProduct = () => {
             }
 
         // {categoryId == "" ? ( setHide(false) setHide1(false) ): setHide(true)}
+    }
+
+    const fetchVarient = async() => {
+      let result = await HttpClient.requestData("view-Varient" , "GET");
+      console.log("ResultVarient", result);
+      if(result && result.status){
+        setVarientData(result?.data)
+      }else{
+          toast.error("Failed to Fetch Variant Data")
+      }
     }
 
     const handleSubCategory = (e) => {
@@ -202,11 +221,33 @@ const AddProduct = () => {
     })}
     
   </select>
+
+  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} isMulti name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
+    <option value={''}>Select  Varient.......</option>
+    {variantData.map((item) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.varient}</option>
+      );
+
+    })}
+    
+  </select>
             <TextField type="text"  label="Product Name" disabled={hide3} value={productName} variant="filled" onChange={(e) => setProductName(e.target.value)} />
             <TextField type="text"  label="Description" disabled={hide3} value={description} variant="filled" onChange={(e) => setDescription(e.target.value)} />
           <TextField style={{paddingBottom: '11px'}} disabled={hide3} type="file" id="images" onChange={imageHandler}  variant="filled" /> 
           <TextField style={{paddingBottom: '11px'}} label="Discount Price" disabled={hide3} type="input"  value={discountPrice} onChange={(e)=>setDiscountPrice(e.target.value)}  variant="filled" />
+          <TextField style={{paddingBottom: '11px'}} label="Weight" disabled={hide3} type="input"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
 
+          <div>
+
+          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Length" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Breadth" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Height" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+
+          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Price" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Quantity" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+
+          </div>
           {image && <img style={{ height: '30%', width: '30%' , borderRadius:'9px' }} src={image} />}
           <LoginButton variant="contained" >
             Add Product

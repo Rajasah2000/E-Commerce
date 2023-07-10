@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { BsChatLeft } from "react-icons/bs";
@@ -29,9 +29,14 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
-  const { isClicked, handleClick, screenSize, setActiveMenu, setScreenSize, currentColor } =
-    useStateContext();
-
+  const {
+    isClicked,
+    handleClick,
+    screenSize,
+    setActiveMenu,
+    setScreenSize,
+    currentColor,
+  } = useStateContext();
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -54,7 +59,7 @@ const Navbar = () => {
   }, [screenSize]);
 
   return (
-    <div className="flex justify-between md:mx-6 relative">
+    <div className="md:mx-6 relative">
       <NavButton
         title="Menu"
         customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
@@ -62,7 +67,7 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
 
-      <div className="flex">
+      <div>
         {/* <NavButton
           title="Cart"
           customFunc={() => handleClick("cart")}
@@ -83,7 +88,7 @@ const Navbar = () => {
           color={currentColor}
           icon={<RiNotification3Line />}
         /> */}
-      {/* <div className="panel panel-default metismenu vertical-nav-menu">
+        {/* <div className="panel panel-default metismenu vertical-nav-menu">
               <div
                 className="panel-heading metismenu-container"
                 role="tab"
@@ -128,6 +133,7 @@ const Navbar = () => {
               </div>
             </div> */}
       </div>
+      
     </div>
   );
 };

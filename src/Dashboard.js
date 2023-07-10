@@ -17,6 +17,8 @@ import EditSubCategory from "./pages/SubCategory/EditSubCategory";
 import EditSubSubCategory from "./pages/SubSubCategory/EditSubSubCategory";
 import AddProduct from "./pages/Product/AddProduct";
 import ManageProduct from "./pages/Product/ManageProduct";
+import AddSecondaryVarient from "./pages/SecondaryVarient/AddSecondaryVarient";
+import ManageSecondaryVarient from "./pages/SecondaryVarient/ManageSecondaryVarient";
 
 import AddColor from "./pages/Color/AddColor";
 import ManageColor from "./pages/Color/ManageColor";
@@ -25,6 +27,12 @@ import EditColor from "./pages/Color/EditColor";
 import AddBrand from "./pages/Brand/AddBrand";
 import ManageBrand from "./pages/Brand/ManageBrand";
 import EditBrand from "./pages/Brand/EditBrand";
+
+import AddPrimaryVarient from "./pages/PrimaryVarient/AddPrimaryVarient";
+import ManagePrimaryVarient from "./pages/PrimaryVarient/ManagePrimaryVarient";
+
+import EditPrimaryVarient from "./pages/PrimaryVarient/EditPrimaryVarient";
+// import EditSecondaryVa
 
 import {
   Ecommerce,
@@ -84,10 +92,11 @@ const Dashboard = () => {
               ${activeMenu ? "md:ml-72" : " flex-2"}
               `}
       >
-        <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
+        <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full" style={{zIndex:"-20px" , display:'flex' , justifyContent:'space-between' , alignItems:'center'}}>
           <Navbar />
+          <button className="btn logout-btn">Logout</button>
         </div>
-
+        
         <div>
           {/* {themeSettings && <ThemeSettings />} */}
 
@@ -122,6 +131,17 @@ const Dashboard = () => {
             
             <Route path="/add-product" element={<AddProduct/>}/>
             <Route path="/manage-product" element={<ManageProduct/>}/>
+
+
+            <Route path="/add-primary-varient" element={<AddPrimaryVarient/>}/>
+            <Route path="/manage-primary-varient" element={<ManagePrimaryVarient/>}/>
+            <Route path="/edit-primary-varient" element={<EditPrimaryVarient/>}/>
+            
+
+
+            <Route path="/add-secondary-varient" element={<AddSecondaryVarient/>}/>
+            <Route path="/manage-secondary-varient" element={<ManageSecondaryVarient/>}/>
+            <Route path="/edit-secondary-varient" element={<ManageSecondaryVarient/>}/>
 
             {/* pages  */}
             <Route path="/orders" element={<Orders />} />

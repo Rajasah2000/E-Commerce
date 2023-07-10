@@ -76,9 +76,7 @@ const Login = () => {
         setPassword("");
         window.location.href="/"
       } else {
-
          toast.error(result.message);
-
       }
     }else{
       emailValidation();
