@@ -33,6 +33,8 @@ const SubCategory = () => {
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
 
+    const [show, setShow] = useState(false);
+
     const imageHandler = async (e) => {
         let file = e.target.files[0];
         let data = new FormData();
@@ -66,7 +68,8 @@ const SubCategory = () => {
             toast.success(result.message);
             setCategoryId('');
             setSubCategoryName('');
-            setImage('')
+            setImage('');
+            setShow(false)
             let file = document.querySelector("#images");
             file.value = "";
           }else{
@@ -95,15 +98,16 @@ const SubCategory = () => {
 
     const handleCategoryId = (e) => {
       setCategoryId(e.target.value);
-      {categoryId === "" ? setHIde(false) : setHIde(true)}
+      setShow(true)
+
     }
 
   return (
     <>
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Add SubCategory" />
-            <Wrapper>
-            {/* <label for="cars">Choose a category:</label> */}
+            {/* <Wrapper>
+            <label for="cars">Choose a category:</label>
   <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category"  value={categoryId}  onChange={(e)=> handleCategoryId(e)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
@@ -121,7 +125,37 @@ const SubCategory = () => {
           <LoginButton variant="contained" onClick={addsubCategory}>
             Add SubCategory
           </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a category :</label>
+<select class="form-select" aria-label="select category" value={categoryId}  onChange={(e)=> handleCategoryId(e)}>
+<option value={''}>Select a Category.......</option>
+{categoryData.map((item , index) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.catName}</option>
+      )
+    })}
+</select>
+
+{
+  show ?
+  <>
+    <div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Category Name :</label>
+    <input type="text" value={subCategoryName} onChange={(e) => setSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
+  </div>
+  <div class="mb-3">
+  <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
+  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
+</div>
+  <button  class="btn btn-primary" onClick={addsubCategory}>Add SubCategory</button>
+  </> : null
+}
+
+
+
+
         </div>
     </>
   )

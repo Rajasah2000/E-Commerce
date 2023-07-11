@@ -96,7 +96,7 @@ const EditCategory = () => {
     <> {viewLoader ? <Loader/> : null}
       <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
         <Header title="Edit Category"/>
-        <Wrapper>
+        {/* <Wrapper>
           <TextField
             style={{ paddingBottom: "32px" }}
             type="text"
@@ -105,7 +105,7 @@ const EditCategory = () => {
             variant="filled"
             onChange={(e) => setCategoryName(e.target.value)}
           />
-          {/* <Typography>Upload an Image *</Typography> */}
+          <Typography>Upload an Image *</Typography>
           <TextField
             type="file"
             id="images"
@@ -118,7 +118,21 @@ const EditCategory = () => {
             <LoginButton variant="contained" onClick={editCategory}>
               Edit Category
             </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px'}}>Category Name</label>
+    <input type="email" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
+  </div>
+  <div class="mb-3">
+  <label for="formFile" class="form-label">Upload Image</label>
+  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
+</div>
+  <button  class="btn btn-primary" onClick={editCategory}>Edit Category</button>
+</form>
       </div>
     </>
   )

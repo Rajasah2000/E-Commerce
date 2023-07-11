@@ -198,7 +198,7 @@ const checking7 = () => {
 
             <div>
               <div onClick={() => setToggle(!toggle)} className={`siteBarDiv ${toggle ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
-                <div name='heading'  >Category </div>
+                <div name='heading' >Category </div>
                 {toggle ? <span  style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
               </svg>

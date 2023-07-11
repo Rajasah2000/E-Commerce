@@ -5,6 +5,11 @@ import { TextField, styled, Box, Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast'
 import HttpClient from '../../components/HttpClient';
+// import ReactSelect from 'react-select'
+import Select from 'react-select';
+
+
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -30,8 +35,16 @@ const AddProduct = () => {
     const [subSubCategoryData , setSubSubCategoryData] = useState([]);
     const [colorData , setColorData] = useState([]);
     const [brandData , setBrandData] = useState([]);
-    const [variantData , setVarientData] = useState([])
+    // const [variantData , setVarientData] = useState([]);
+    // let variantData = [];
 
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [colorOption , setColorOption] = useState(null);
+
+
+    console.log("selectedOption" , selectedOption);
+
+    // console.log("VarientData" , variantData);
     const [productName , setProductName]= useState('');
     const [image , setImage] = useState('');
     const [description , setDescription] = useState('');
@@ -39,6 +52,7 @@ const AddProduct = () => {
     const [categoryId , setCategoryId] = useState('');
     const [subCategoryId , setSubCategoryId] = useState('');
     const [subSubCategoryId , setSubSubCategoryId] = useState('');
+    const [varients , setVarient] = useState('')
     const [colorId , setColorId] = useState('');
     const [brandId , setBrandId] = useState('');
 
@@ -51,6 +65,7 @@ const AddProduct = () => {
 
     const [Price , setPrice] = useState();
     const [quantity , setQuantity] = useState();
+    const [option,setOption]=useState([])
 
 
 
@@ -116,7 +131,14 @@ const AddProduct = () => {
         let result = await HttpClient.requestData("view-Color" , "GET");
         console.log("ResultColor", result);
         if(result && result.status){
-            setColorData(result?.data)
+          let arr = [];
+            result?.data.forEach((item) => {
+              arr.push({
+                label:item?.name,
+                value:item?._id
+              })
+            })
+            setColorData(arr);
         }else{
             toast.error("Failed to Fetch color Data")
         }
@@ -149,7 +171,17 @@ const AddProduct = () => {
       let result = await HttpClient.requestData("view-Varient" , "GET");
       console.log("ResultVarient", result);
       if(result && result.status){
-        setVarientData(result?.data)
+
+        let arr=[];
+        result.data.forEach(item => {
+          arr.push({
+            label:item.varient,
+            value:item._id
+          })
+        });
+        setOption(arr)
+
+
       }else{
           toast.error("Failed to Fetch Variant Data")
       }
@@ -164,6 +196,33 @@ const AddProduct = () => {
         setSubSubCategoryId(e.target.value);
         {subSubCategoryId == "" ? setHide3(false) : setHide3(true)}
     }
+
+    // const varient = () => {
+    
+    //   variantData.map((item) => {
+    //     return(
+    //       <option id={item?._id}  value={item?._id}>{item?.varient}</option>
+    //       // value={item}
+    //     );
+  
+    //   })
+  
+    // }
+
+    const onHandleVarient = (e) => {
+
+      // setVarient(e.target.value)
+
+      console.log("values",e.target.value);
+
+    }
+
+    // const options = [
+    //   { value: 'chocolatessssssss', label: 'Chocolate' },
+    //   { value: 'strawberry', label: 'Strawberry' },
+    //   { value: 'vanilla', label: 'Vanilla' },
+    // ];
+
 
   return (
     <>
@@ -201,7 +260,7 @@ const AddProduct = () => {
     
   </select>
 
-  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} disabled={hide1}   name="color" value={colorId} onChange={(e)=> setColorId(e.target.value)}>
+  {/* <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} disabled={hide1}   name="color" value={colorId} onChange={(e)=> setColorId(e.target.value)}>
     <option value={''}>Select a Color.......</option>
     {colorData.map((item) => {
       return(
@@ -209,7 +268,7 @@ const AddProduct = () => {
       )
     })}
     
-  </select>
+  </select> */}
 
   <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} disabled={hide1} name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
     <option value={''}>Select a Brand.......</option>
@@ -219,10 +278,9 @@ const AddProduct = () => {
       );
 
     })}
-    
   </select>
 
-  <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} isMulti name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
+  {/* <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}}  name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
     <option value={''}>Select  Varient.......</option>
     {variantData.map((item) => {
       return(
@@ -231,9 +289,18 @@ const AddProduct = () => {
 
     })}
     
-  </select>
-            <TextField type="text"  label="Product Name" disabled={hide3} value={productName} variant="filled" onChange={(e) => setProductName(e.target.value)} />
-            <TextField type="text"  label="Description" disabled={hide3} value={description} variant="filled" onChange={(e) => setDescription(e.target.value)} />
+    
+  </select> */}
+
+{/* 
+  <script>
+    new MultiSelectTag('varient')  // id
+</script> */}
+
+
+
+          <TextField type="text"  label="Product Name" disabled={hide3} value={productName} variant="filled" onChange={(e) => setProductName(e.target.value)} />
+          <TextField type="text"  label="Description" disabled={hide3} value={description} variant="filled" onChange={(e) => setDescription(e.target.value)} />
           <TextField style={{paddingBottom: '11px'}} disabled={hide3} type="file" id="images" onChange={imageHandler}  variant="filled" /> 
           <TextField style={{paddingBottom: '11px'}} label="Discount Price" disabled={hide3} type="input"  value={discountPrice} onChange={(e)=>setDiscountPrice(e.target.value)}  variant="filled" />
           <TextField style={{paddingBottom: '11px'}} label="Weight" disabled={hide3} type="input"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
@@ -249,7 +316,13 @@ const AddProduct = () => {
 
           </div>
           {image && <img style={{ height: '30%', width: '30%' , borderRadius:'9px' }} src={image} />}
-          <LoginButton variant="contained" >
+          <label>Select Varient</label>
+          <Select className='selectOption' options={option} value={selectedOption}  onChange={setSelectedOption} isMulti />
+          <label>Select Color</label>
+          
+          <Select className='selectOption' options={colorData} value={colorOption}  onChange={setColorOption} isMulti />
+          
+          <LoginButton variant="contained">
             Add Product
           </LoginButton>
 

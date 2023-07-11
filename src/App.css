@@ -50,7 +50,7 @@
 .linkAn{
   color: #000000;
   padding-left: 30px;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 7px;
   display: block;
 }
@@ -60,7 +60,7 @@
   font-weight: 600;
   cursor: pointer;
   padding: 9px 22px;
-  font-size: 20px;
+  font-size: 17px;
   border-radius: 10px;
   margin-right: 12px;
   display: flex;
@@ -136,4 +136,11 @@
             transform-origin: top;
     opacity: 1;
   }
+}
+
+
+
+.selectOption input{
+  height: 30px !important;
+  color: red;
 }

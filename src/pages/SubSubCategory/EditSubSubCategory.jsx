@@ -34,7 +34,11 @@ const EditSubSubCategory = () => {
     const [subCategoryId , setSubCategoryId] = useState('');
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
-    const [id , setId] = useState('')
+    const [id , setId] = useState('');
+
+
+    const [show , setShow] = useState(false);
+    const [show1 , setShow1] = useState(false)
 
     const location = useLocation();
 
@@ -107,6 +111,18 @@ const EditSubSubCategory = () => {
 
     }
 
+    const handleCategory = (e) => {
+      setCategoryId(e.target.value);
+      // {categoryId === "" ? setHide(false) : setHide(true)}
+      setShow(true);
+    }
+
+    const handleSubCategory = (e) => {
+      setSubCategoryId(e.target.value);
+      // { subCategoryId === "" ? setHide1(false) : setHide1(true)}
+      setShow1(true);
+    }
+
     const fetchCategoryData = async() => {
       let result  = await HttpClient.requestData("viewCategory", "GET");
       console.log("CategoryData" , result);
@@ -120,8 +136,8 @@ const EditSubSubCategory = () => {
     <>
     <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Edit SubSubCategory" />
-            <Wrapper>
-            {/* <label for="cars">Choose a category:</label> */}
+            {/* <Wrapper>
+            <label for="cars">Choose a category:</label>
   <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}}  name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
@@ -148,7 +164,52 @@ const EditSubSubCategory = () => {
           <LoginButton variant="contained" onClick={editsubSubCategory}>
             Edit SubSubCategory
           </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a category :</label>
+<select class="form-select" aria-label="select category" value={categoryId} onChange={(e)=> handleCategory(e)}>
+<option value={''}>Select a Category.......</option>
+{categoryData.map((item , index) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.catName}</option>
+      )
+    })}
+</select>
+
+{/* {
+show ? <> */}
+  <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a sub category :</label>
+<select class="form-select" aria-label="select category" value={subCategoryId} onChange={(e)=> handleSubCategory(e)}>
+<option value={''}>Select a SubCategory.......</option>
+    {subCategoryData.map((item) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.subcatName}</option>
+      )
+    })}
+</select>
+{/* </> :
+  null
+} */}
+
+{/* {
+  show1 ? <> */}
+    <div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Sub Category Name :</label>
+    <input type="text" value={subSubCategoryName} onChange={(e) => setSubSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter sub Sub Category Name"/>
+  </div>
+  <div class="mb-3">
+  <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
+  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
+</div>
+  <button  class="btn btn-primary" onClick={editsubSubCategory}>Edit subSubCategory</button>
+{/* 
+  </>: null
+} */}
+
+
         </div>
    </>
   )

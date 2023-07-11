@@ -17,18 +17,19 @@ const Wrapper = styled(Box)`
     margin-top: 20px;
   }
 `;
-const LoginButton = styled(Button)`
-  text-transform: none;
-  background-color: rgb(3, 201, 215);
-  height: 48px;
-  border-radius: 2px;
-`;
+// const LoginButton = styled(Button)`
+//   text-transform: none;
+//   background-color: rgb(3, 201, 215);
+//   height: 48px;
+//   border-radius: 2px;
+// `;
 
 const AddColor = () => {
     const [colorName , setColorName] = useState('');
     const [colorCode , setColorCode] = useState('') ;
 
-    const addColor = async() => {
+    const addColor = async(e) => {
+      e.preventDefault()
         let data = {
             name:colorName,
             colorCode: colorCode
@@ -53,7 +54,7 @@ const AddColor = () => {
     <>
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Add Color" />
-            <Wrapper>
+            {/* <Wrapper>
 
             <TextField type="text"  label="Color Name"  value={colorName} variant="filled"  onChange={(e) => setColorName(e.target.value)} />
 
@@ -62,7 +63,20 @@ const AddColor = () => {
           <LoginButton variant="contained" onClick={addColor}>
             Add Color
           </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+<form>
+<div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px'}}>Color Name</label>
+    <input type="email" value={colorName} onChange={(e) => setColorName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Color Name"/>
+  </div>
+
+  <div class="form-group" style={{marginBottom:'20px'}}>
+    <label for="exampleInputEmail1" style={{marginBottom:'12px'}}>Color Code</label>
+    <input type="email" value={colorCode} onChange={(e) => setColorCode(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Color code"/>
+  </div>
+
+  <button  class="btn btn-primary" onClick={addColor}>Add Color</button>
+  </form>
         </div>
     </>
   )

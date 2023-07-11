@@ -104,13 +104,19 @@ const EditSubCategory = () => {
       }
     }
 
+    const handleCategoryId = (e) => {
+      setCategoryId(e.target.value);
+      // setShow(true)
+
+    }
+
 
   return (
     <>
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Edit SubCategory" />
-            <Wrapper>
-            {/* <label for="cars">Choose a category:</label> */}
+            {/* <Wrapper>
+            <label for="cars">Choose a category:</label>
   <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category" value={categoryId} onChange={(e)=> setCategoryId(e.target.value)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
@@ -128,7 +134,32 @@ const EditSubCategory = () => {
           <LoginButton variant="contained" onClick={editsubCategory}>
             Edit SubCategory
           </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a category :</label>
+<select class="form-select" aria-label="select category" value={categoryId}  onChange={(e)=> handleCategoryId(e)}>
+<option value={''}>Select a Category.......</option>
+{categoryData.map((item , index) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.catName}</option>
+      )
+    })}
+</select>
+
+
+    <div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Category Name :</label>
+    <input type="text" value={subCategoryName} onChange={(e) => setSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
+  </div>
+  <div class="mb-3">
+  <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
+  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
+</div>
+  <button  class="btn btn-primary" onClick={editsubCategory}>Edit SubCategory</button>
+
+
+
         </div>
     </>
   )
