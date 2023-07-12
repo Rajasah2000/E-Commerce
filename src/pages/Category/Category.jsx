@@ -139,7 +139,7 @@ const Category = () => {
   <input id="images" onChange={imageHandler} class="form-control" type="file" />
   {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
 </div>
-  <button  class="btn btn-primary" onClick={(e)=>addCategory(e)}>Add Category</button>
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={(e)=>addCategory(e)}>Add Category</button>
 </form>
       </div>
     </>

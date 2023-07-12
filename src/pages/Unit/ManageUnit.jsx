@@ -4,10 +4,11 @@ import DataTable from 'react-data-table-component'
 import HttpClient from '../../components/HttpClient';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+const ManageUnit = () => {
 
-const ManageBrand = () => {
 
-    const [brandData , setBrandData] = useState([]);
+    // const [brandData , setBrandData] = useState([]);
+    const [unitData , setUnitData] = useState([]);
 
 
     const navigate = useNavigate();
@@ -15,38 +16,23 @@ const ManageBrand = () => {
 
 
     useEffect(() => {
-        fetchBrandData();
+        fetchUnitData();
     },[]);
 
-    const onEdit = (item) => {
-        navigate('/edit-brand', {state:item})
-    }
 
-    const onDelete = async(id) => {
-        alert("Are You Really want to delete this item ?")
-        let endpoint = `delete-Brand/${id}`
-        
-        let result =await HttpClient.requestData(endpoint , "DELETE");
 
-        if(result && result?.status){
-            toast.success(result?.message);
-            fetchBrandData();
-        }else{
-            toast.error(result?.message);
-        }
-    }
-    const fetchBrandData = async() => {
-        let result = await HttpClient.requestData("view-Brand-name" , "GET");
-        console.log("ResultBrand", result);
+    const fetchUnitData = async() => {
+        let result = await HttpClient.requestData("view-Unit" , "GET");
+        console.log("Result", result);
         if(result && result.status){
             let arr = result?.data?.map((item, index) => {
                 return{
                     sl: index+1,
-                    brandName:<div style={{ fontSize:'13px'}}>{item?.name}</div>,
-                   
+                    unitName:<div style={{ fontSize:'13px'}}>{item?.name}</div>,
+                    
                     action:(
                         <div style={{ display: 'flex' , flexDirection:'coloum' }}>
-                                                <svg onClick={() => onEdit(item)} style={{ height:'20px' , width:'20px' ,cursor:'pointer'  , marginRight:'20px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <svg onClick={() => onEdit(item)} style={{ height:'20px' , width:'20px' ,cursor:'pointer'  , marginRight:'34px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                         </svg>
@@ -57,10 +43,28 @@ const ManageBrand = () => {
                     )
                 }
             });
-            setBrandData(arr);
+            setUnitData(arr);
         }
     }
 
+
+    const onEdit = (item) => {
+        // navigate('/edit-brand', {state:item})
+    }
+
+    const onDelete = async(id) => {
+        // alert("Are You Really want to delete this item ?")
+        // let endpoint = `delete-Brand/${id}`
+        
+        // let result =await HttpClient.requestData(endpoint , "DELETE");
+
+        // if(result && result?.status){
+        //     toast.success(result?.message);
+        //     fetchUnitData();
+        // }else{
+        //     toast.error(result?.message);
+        // }
+    }
 
     const columns = [
         {
@@ -70,23 +74,24 @@ const ManageBrand = () => {
         },
 
         {
-            name: <div style={{ fontSize:'14px' , fontWeight:'bolder'}}>Brand Name</div>,
-            selector: row => row.brandName,
+            name: <div style={{ fontSize:'14px' , fontWeight:'bolder'}}>Unit Name</div>,
+            selector: row => row.unitName,
         },
         {
-            name: <div style={{ fontSize:'14px' ,marginLeft:'8px', fontWeight:'bolder'}}>Action</div>,
+            name: <div style={{ fontSize:'14px' , fontWeight:'bolder'}}>Action</div>,
             selector: row => row.action,
         },
+
     ];
 
   return (
-    <>
-                <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-            <Header title="Manage Brand" />
-            <DataTable columns={columns} data={brandData} pagination/>
+   <>
+            <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
+            <Header title="Manage Color" />
+            <DataTable columns={columns} data={unitData} pagination/>
         </div>
-    </>
+   </>
   )
 }
 
-export default ManageBrand
+export default ManageUnit

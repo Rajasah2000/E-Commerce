@@ -33,7 +33,8 @@ const AddPrimaryVarient = () => {
     const [varientType , setVarientType] = useState('');
     const [varient , setVarient] = useState('');
 
-const addVarient = async () => {
+const addVarient = async (e) => {
+  e.preventDefault()
     let data = {
         varientType:varientType,
         varient:varient
@@ -61,7 +62,7 @@ const addVarient = async () => {
           <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
         
         <Header title="Add  Primary Varient "/>
-        <Wrapper>
+        {/* <Wrapper>
           <TextField
             style={{ paddingBottom: "32px" }}
             type="text"
@@ -83,7 +84,29 @@ const addVarient = async () => {
             <LoginButton variant="contained" onClick={addVarient} >
               Add Varient
             </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+
+<form>
+<div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient Type : </label>
+    <input type="email" value={varientType} onChange={(e) => setVarientType(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
+  </div>
+
+  <div class="form-group" style={{marginBottom:'21px'}}>
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient : </label>
+    <input type="email" value={varient} onChange={(e) => setVarient(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
+  </div>
+
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addVarient}>Add Varient</button>
+  </form>
+
+
+
+
+
+
+
       </div>
    </>
   )

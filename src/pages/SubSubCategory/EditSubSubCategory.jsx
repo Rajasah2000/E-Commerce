@@ -80,7 +80,8 @@ const EditSubSubCategory = () => {
         }
     }
 
-    const editsubSubCategory = async() => {
+    const editsubSubCategory = async(e) => {
+      e.preventDefault();
         let data = {
             categoryID:categoryId,
             subCategoryID:subCategoryId,
@@ -189,12 +190,8 @@ show ? <> */}
       )
     })}
 </select>
-{/* </> :
-  null
-} */}
 
-{/* {
-  show1 ? <> */}
+<form>
     <div class="form-group">
     <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Sub Category Name :</label>
     <input type="text" value={subSubCategoryName} onChange={(e) => setSubSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter sub Sub Category Name"/>
@@ -204,10 +201,8 @@ show ? <> */}
   <input id="images" onChange={imageHandler} class="form-control" type="file" />
   {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
 </div>
-  <button  class="btn btn-primary" onClick={editsubSubCategory}>Edit subSubCategory</button>
-{/* 
-  </>: null
-} */}
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={editsubSubCategory}>Edit subSubCategory</button>
+  </form>
 
 
         </div>

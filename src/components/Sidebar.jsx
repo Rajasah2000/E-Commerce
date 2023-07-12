@@ -84,6 +84,14 @@ const checking7 = () => {
   }
 }
 
+const checking8 = () => {
+  if(location.pathname == '/add-unit' || location.pathname =="/manage-unit"){
+    return true;
+  }else{
+    return false;
+  }
+}
+
   const [toggle , setToggle] = useState(checking);
   const [toggle1 , setToggle1] = useState(checking1);
   const [toggle2 , setToggle2] = useState(checking2);
@@ -92,6 +100,7 @@ const checking7 = () => {
   const [toggle5 , setToggle5] = useState(checking5);
   const [toggle6 , setToggle6] = useState(checking6);
   const [toggle7 , setToggle7] = useState(checking7);
+  const [toggle8 , setToggle8] = useState(checking8)
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
     useStateContext();
 
@@ -290,6 +299,26 @@ const checking7 = () => {
               {toggle5 ? <div style={{marginTop: '5px'}} className="swing-in-top-fwd">
                     <Link  to={'/add-brand'}  className="linkAn">Add Brand</Link>
                     <Link to={'/manage-brand'}className="linkAn">Manage Brand</Link>
+                  </div> : null}
+            </div>
+
+
+            <div>
+              <div onClick={() => setToggle8(!toggle8)} className={`siteBarDiv ${toggle8 ? "handleSidebar" : ""}`} style={{ display: 'flex' ,  justifyContent: 'space-between' }}>
+                <div name='heading'  >Unit </div>
+                {toggle8 ? <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+              </span> : <span style={{marginTop:'5px'}}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              </span>}
+                
+
+              </div>
+              {toggle8 ? <div style={{marginTop: '5px'}} className="swing-in-top-fwd">
+                    <Link  to={'/add-unit'}  className="linkAn">Add Unit</Link>
+                    <Link to={'/manage-unit'}className="linkAn">Manage Unit</Link>
                   </div> : null}
             </div>
 

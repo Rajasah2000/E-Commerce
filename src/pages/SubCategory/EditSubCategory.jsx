@@ -146,7 +146,7 @@ const EditSubCategory = () => {
     })}
 </select>
 
-
+    <form>
     <div class="form-group">
     <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Category Name :</label>
     <input type="text" value={subCategoryName} onChange={(e) => setSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
@@ -156,8 +156,8 @@ const EditSubCategory = () => {
   <input id="images" onChange={imageHandler} class="form-control" type="file" />
   {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
 </div>
-  <button  class="btn btn-primary" onClick={editsubCategory}>Edit SubCategory</button>
-
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={editsubCategory}>Edit SubCategory</button>
+  </form>
 
 
         </div>

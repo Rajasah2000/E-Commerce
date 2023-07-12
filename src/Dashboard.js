@@ -24,6 +24,10 @@ import AddColor from "./pages/Color/AddColor";
 import ManageColor from "./pages/Color/ManageColor";
 import EditColor from "./pages/Color/EditColor";
 
+import AddUnit from "./pages/Unit/AddUnit";
+import ManageUnit from "./pages/Unit/ManageUnit";
+import EditUnit from "./pages/Unit/EditUnit";
+
 import AddBrand from "./pages/Brand/AddBrand";
 import ManageBrand from "./pages/Brand/ManageBrand";
 import EditBrand from "./pages/Brand/EditBrand";
@@ -32,6 +36,8 @@ import AddPrimaryVarient from "./pages/PrimaryVarient/AddPrimaryVarient";
 import ManagePrimaryVarient from "./pages/PrimaryVarient/ManagePrimaryVarient";
 
 import EditPrimaryVarient from "./pages/PrimaryVarient/EditPrimaryVarient";
+import { useNavigate } from "react-router-dom";
+import { reactLocalStorage } from "reactjs-localstorage";
 // import EditSecondaryVa
 
 import {
@@ -65,6 +71,15 @@ const Dashboard = () => {
 
   // const location = useLocation();
 
+  const logOut = () => {
+    alert("Are you really want to logout ?");
+    reactLocalStorage.remove('adminData');
+    reactLocalStorage.remove('loginStatus');
+    navigate('/login');
+  }
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex relative dark:bg-main-dark-bg">
       <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
@@ -94,7 +109,7 @@ const Dashboard = () => {
       >
         <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full" style={{zIndex:"-20px" , display:'flex' , justifyContent:'space-between' , alignItems:'center'}}>
           <Navbar />
-          <button className="btn logout-btn">Logout</button>
+          <button onClick={logOut} type="button" class="btn btn-warning logout-btn" style={{ marginRight:'21px'}} >Logout</button>
         </div>
         
         <div>
@@ -131,6 +146,10 @@ const Dashboard = () => {
             
             <Route path="/add-product" element={<AddProduct/>}/>
             <Route path="/manage-product" element={<ManageProduct/>}/>
+
+            <Route path="/add-unit" element={<AddUnit/>}/>
+            <Route path="/manage-unit" element={<ManageUnit/>}/>
+            <Route path="/edit-unit" element={<EditUnit/>}/>
 
 
             <Route path="/add-primary-varient" element={<AddPrimaryVarient/>}/>

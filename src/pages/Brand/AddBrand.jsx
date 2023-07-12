@@ -36,7 +36,8 @@ const AddBrand = () => {
 
     
 
-    const addBrand = async () => {
+    const addBrand = async (e) => {
+      e.preventDefault();
         if(categoryID && brandName){
             let result =await HttpClient.requestData("add-Brand-name" , "POST" ,data );
             console.log("BannerResult", result);
@@ -73,8 +74,8 @@ const AddBrand = () => {
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
         
         <Header title="Add Brand"/>
-        <Wrapper>
-            {/* <label for="cars">Choose a category:</label> */}
+        {/* <Wrapper>
+            <label for="cars">Choose a category:</label>
   <select style={{height: '58px' , borderRadius:'5px'}} id="category" name="category"  value={categoryID}  onChange={(e)=> setCategoryId(e.target.value)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item , index) => {
@@ -84,13 +85,34 @@ const AddBrand = () => {
     })}
     
   </select>
-            <TextField type="text"  label="Brand Name"  value={brandName} variant="filled"  onChange={(e) => setBarandName(e.target.value)} />
+            <TextField type="text"  label="Brand Name"  value={brandName} onChange={(e) => setBarandName(e.target.value)} />
 
           
           <LoginButton variant="contained" onClick={addBrand}>
             Add Brand
           </LoginButton>
-        </Wrapper>
+        </Wrapper> */}
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a category :</label>
+<select class="form-select" aria-label="select category" value={categoryID}  onChange={(e)=> setCategoryId(e.target.value)}>
+<option value={''}>Select a Category.......</option>
+{categoryData.map((item , index) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.catName}</option>
+      )
+    })}
+</select>
+
+
+<form>
+<div class="form-group" style={{marginBottom:'21px'}}>
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Brand Name : </label>
+    <input type="email" value={brandName} onChange={(e) => setBarandName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
+  </div>
+
+
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addBrand}>Add Brand</button>
+  </form>
       </div>
     </>
   )

@@ -29,7 +29,7 @@ const SubCategory = () => {
     const [categoryData , setCategorydata] = useState([]);
     // const [category , setCategory] = useState('')
     const [categoryId , setCategoryId] = useState('');
-    const [hide , setHIde] = useState(true);
+    const [hide , setHide] = useState(true);
     // const [preview , setPreview] = useState('');
     const [image , setImage] = useState('');
 
@@ -51,7 +51,9 @@ const SubCategory = () => {
     }
 
     // const { id} = useParams();
-    const addsubCategory = async() => {
+    const addsubCategory = async(e) => {
+      e.preventDefault();
+
         let data = {
             categoryID:categoryId,
             subcatName:subCategoryName,
@@ -97,8 +99,8 @@ const SubCategory = () => {
     }
 
     const handleCategoryId = (e) => {
+      {categoryId === "" ? setHide(false) : setHide(true)}
       setCategoryId(e.target.value);
-      setShow(true)
 
     }
 
@@ -136,22 +138,19 @@ const SubCategory = () => {
       )
     })}
 </select>
-
-{
-  show ?
-  <>
+    <form>
     <div class="form-group">
     <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Category Name :</label>
-    <input type="text" value={subCategoryName} onChange={(e) => setSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
+    <input type="text" value={subCategoryName} disabled={hide} onChange={(e) => setSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Category Name"/>
   </div>
   <div class="mb-3">
   <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
-  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  <input id="images" onChange={imageHandler} disabled={hide} class="form-control" type="file" />
   {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
 </div>
-  <button  class="btn btn-primary" onClick={addsubCategory}>Add SubCategory</button>
-  </> : null
-}
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addsubCategory}>Add SubCategory</button>
+  </form>
+
 
 
 

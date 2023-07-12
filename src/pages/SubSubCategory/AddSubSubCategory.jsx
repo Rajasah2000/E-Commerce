@@ -71,7 +71,8 @@ const AddSubSubCategory = () => {
         }
     }
 
-    const addsubSubCategory = async() => {
+    const addsubSubCategory = async(e) => {
+      e.preventDefault();
         let data = {
             categoryID:categoryId,
             subCategoryID:subCategoryId,
@@ -113,9 +114,11 @@ const AddSubSubCategory = () => {
     }
 
     const handleCategory = (e) => {
+      {categoryId === "" ? setHide(false) : setHide(true)}
       setCategoryId(e.target.value);
-      // {categoryId === "" ? setHide(false) : setHide(true)}
-      setShow(true);
+      // console.log("CategoryId" , categoryId);
+
+      // setHide(false)
     }
 
     const handleSubCategory = (e) => {
@@ -169,10 +172,9 @@ const AddSubSubCategory = () => {
     })}
 </select>
 
-{
-show ? <>
+
   <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a sub category :</label>
-<select class="form-select" aria-label="select category" value={subCategoryId} onChange={(e)=> handleSubCategory(e)}>
+<select class="form-select" aria-label="select category" disabled={hide} value={subCategoryId} onChange={(e)=> handleSubCategory(e)}>
 <option value={''}>Select a SubCategory.......</option>
     {subCategoryData.map((item) => {
       return(
@@ -180,25 +182,21 @@ show ? <>
       )
     })}
 </select>
-</> :
-  null
-}
 
-{
-  show1 ? <>
+
+    <form>
     <div class="form-group">
     <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Sub Sub Category Name :</label>
-    <input type="text" value={subSubCategoryName} onChange={(e) => setSubSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter sub Sub Category Name"/>
+    <input type="text" value={subSubCategoryName} disabled={hide} onChange={(e) => setSubSubCategoryName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter sub Sub Category Name"/>
   </div>
   <div class="mb-3">
   <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
-  <input id="images" onChange={imageHandler} class="form-control" type="file" />
+  <input id="images" disabled={hide} onChange={imageHandler} class="form-control" type="file" />
   {image && <img style={{ height: "30%", width: "30%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
-</div>
-  <button  class="btn btn-primary" onClick={addsubSubCategory}>Add subSubCategory</button>
+  </div>
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addsubSubCategory}>Add subSubCategory</button>
 
-  </>: null
-}
+  </form>
 
 
 

@@ -43,8 +43,8 @@ const ManageColor = () => {
             let arr = result?.data?.map((item, index) => {
                 return{
                     sl: index+1,
-                    colorName:<div>{item?.name}</div>,
-                    colorCode:<div>{item?.colorCode}</div>,
+                    colorName:<div style={{ fontSize:'13px'}}>{item?.name}</div>,
+                    colorCode:<div style={{ fontSize:'13px'}}>{item?.colorCode}</div>,
                     action:(
                         <div style={{ display: 'flex' , flexDirection:'coloum' }}>
                                                 <svg onClick={() => onEdit(item)} style={{ height:'20px' , width:'20px' ,cursor:'pointer'  , marginRight:'34px'}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

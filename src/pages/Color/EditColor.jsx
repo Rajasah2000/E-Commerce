@@ -80,16 +80,17 @@ const EditColor = () => {
 
 <form>
 <div class="form-group">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px'}}>Color Name</label>
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Color Name : </label>
     <input type="email" value={colorName} onChange={(e) => setColorName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Color Name"/>
   </div>
 
   <div class="form-group" style={{marginBottom:'20px'}}>
-    <label for="exampleInputEmail1" style={{marginBottom:'12px'}}>Color Code</label>
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Color Code : </label>
     <input type="email" value={colorCode} onChange={(e) => setColorCode(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Color code"/>
   </div>
 
-  <button  class="btn btn-primary" onClick={editColor}>Edit Color</button>
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={editColor}>Edit Color</button>
+
   </form>
 
         </div>

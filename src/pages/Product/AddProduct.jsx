@@ -58,11 +58,16 @@ const AddProduct = () => {
 
     const [hide , setHide] = useState(true);
     const [hide1 , setHide1] = useState(true);
-    const [hide3 , setHide3] = useState(true);
+    const [hide3 , setHide3] = useState(false);
 
     const [discountPrice , setDiscountPrice] = useState('');
     const [weight , setWeight] = useState('');
 
+
+
+    const [length , setLength] = useState();
+    const [breadth , setBreadth] = useState();
+    const [height , setHeight] = useState();
     const [Price , setPrice] = useState();
     const [quantity , setQuantity] = useState();
     const [option,setOption]=useState([])
@@ -155,14 +160,16 @@ const AddProduct = () => {
     }
 
     const handleCategory = (e) => {
-        setCategoryId(e.target.value);
+        
         if(categoryId == ""){
             setHide(false) ;
         }
             else{
                 setHide(true)
-                setHide1(true);
+                // setHide1(true);
             }
+
+            setCategoryId(e.target.value);
 
         // {categoryId == "" ? ( setHide(false) setHide1(false) ): setHide(true)}
     }
@@ -188,13 +195,17 @@ const AddProduct = () => {
     }
 
     const handleSubCategory = (e) => {
+      {subCategoryId === "" ? setHide1(false) :setHide1(true)};
         setSubCategoryId(e.target.value);
-        {subCategoryId === "" ? setHide1(false) :setHide1(true)}
+      
     }
 
     const handleSubSubCategory = (e) => {
+     
         setSubSubCategoryId(e.target.value);
-        {subSubCategoryId == "" ? setHide3(false) : setHide3(true)}
+        // {subSubCategoryId  ? setHide3(true) : setHide3(false)}
+        setHide3(true);
+     
     }
 
     // const varient = () => {
@@ -217,19 +228,44 @@ const AddProduct = () => {
 
     }
 
-    // const options = [
-    //   { value: 'chocolatessssssss', label: 'Chocolate' },
-    //   { value: 'strawberry', label: 'Strawberry' },
-    //   { value: 'vanilla', label: 'Vanilla' },
-    // ];
-
+    const addProduct = () => {
+        // let data = {
+        //   productName:,
+        //   image:,
+        //   description:,
+        //   catID:,
+        //   subCatID:,
+        //   subSubCatID:,
+        //   secondaryVarientID:,
+        //   brandID:,
+        //   colorID:,
+        //   primaryVarientID:[
+        //     {
+        //       id:,
+        //       price:,
+        //       quantity:,
+        //     }
+        //   ],
+        //   unitID:,
+        //   discountPrice:,
+        //   weight:,
+        //   dimension:[
+        //     {
+        //       length:,
+        //       breadth:,
+        //       height:,
+        //     }
+        //   ]
+        // }
+    }
 
   return (
     <>
              <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header title="Add Product" />
-            <Wrapper>
-            {/* <label for="cars">Choose a category:</label> */}
+            {/* <Wrapper>
+            <label for="cars">Choose a category:</label>
+
   <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} id="category" name="category" value={categoryId} onChange={(e)=> handleCategory(e)}>
     <option value={''}>Select a Category.......</option>
     {categoryData.map((item) => {
@@ -260,15 +296,6 @@ const AddProduct = () => {
     
   </select>
 
-  {/* <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} disabled={hide1}   name="color" value={colorId} onChange={(e)=> setColorId(e.target.value)}>
-    <option value={''}>Select a Color.......</option>
-    {colorData.map((item) => {
-      return(
-        <option id={item?._id}  value={item?._id}>{item?.name}</option>
-      )
-    })}
-    
-  </select> */}
 
   <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}} disabled={hide1} name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
     <option value={''}>Select a Brand.......</option>
@@ -280,27 +307,12 @@ const AddProduct = () => {
     })}
   </select>
 
-  {/* <select style={{height: '58px' , borderRadius:'5px' , marginBottom:'24px'}}  name="brand" value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
-    <option value={''}>Select  Varient.......</option>
-    {variantData.map((item) => {
-      return(
-        <option id={item?._id}  value={item?._id}>{item?.varient}</option>
-      );
-
-    })}
-    
-    
-  </select> */}
-
-{/* 
-  <script>
-    new MultiSelectTag('varient')  // id
-</script> */}
 
 
 
-          <TextField type="text"  label="Product Name" disabled={hide3} value={productName} variant="filled" onChange={(e) => setProductName(e.target.value)} />
-          <TextField type="text"  label="Description" disabled={hide3} value={description} variant="filled" onChange={(e) => setDescription(e.target.value)} />
+
+          <TextField type="text"  label="Product Name" disabled={hide3} value={productName} onChange={(e) => setProductName(e.target.value)} />
+          <TextField type="text"  label="Description" disabled={hide3} value={description} onChange={(e) => setDescription(e.target.value)} />
           <TextField style={{paddingBottom: '11px'}} disabled={hide3} type="file" id="images" onChange={imageHandler}  variant="filled" /> 
           <TextField style={{paddingBottom: '11px'}} label="Discount Price" disabled={hide3} type="input"  value={discountPrice} onChange={(e)=>setDiscountPrice(e.target.value)}  variant="filled" />
           <TextField style={{paddingBottom: '11px'}} label="Weight" disabled={hide3} type="input"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
@@ -309,7 +321,7 @@ const AddProduct = () => {
 
           <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Length" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
           <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Breadth" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
-          <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Height" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
+          <TextField style={{paddingBottom: '11px' setHide3(false), marginRight:'98px'}} label="Height" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
 
           <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Price" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
           <TextField style={{paddingBottom: '11px' , marginRight:'98px'}} label="Quantity" disabled={hide3} type="number"  value={weight} onChange={(e)=>setWeight(e.target.value)}  variant="filled" />
@@ -326,7 +338,143 @@ const AddProduct = () => {
             Add Product
           </LoginButton>
 
-        </Wrapper>
+        </Wrapper> */}
+
+
+
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a category :</label>
+<select class="form-select" aria-label="select category" value={categoryId} onChange={(e)=> handleCategory(e)}>
+<option value={''}>Select a Category.......</option>
+{categoryData.map((item , index) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.catName}</option>
+      )
+    })}
+</select>
+
+
+  <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a sub category :</label>
+<select class="form-select" aria-label="select category" disabled={hide} value={subCategoryId} onChange={(e)=> handleSubCategory(e)}>
+<option value={''}>Select a SubCategory.......</option>
+    {subCategoryData.map((item) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.subcatName}</option>
+      )
+    })}
+</select>
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a sub sub category :</label>
+<select class="form-select" aria-label="select category" disabled={hide1} value={subSubCategoryId} onChange={(e)=> handleSubSubCategory(e)}>
+<option value={''}>Select a subSubCategory.......</option>
+    {subSubCategoryData.map((item) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.subSubCatName}</option>
+      )
+    })}
+</select>
+
+{
+  hide3 ? <>
+          <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a Brand Name :</label>
+<select class="form-select" aria-label="select category"  value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
+<option value={''}>Select a brand.......</option>
+    {brandData.map((item) => {
+      return(
+        <option id={item?._id}  value={item?._id}>{item?.name}</option>
+      )
+    })}
+</select>
+<div>
+  
+</div>
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose Color Name :</label>
+<Select  options={colorData} value={colorOption} onChange={setColorOption} isMulti />
+          
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose Varient Name :</label>
+<Select  options={option} value={selectedOption}  onChange={setSelectedOption} isMulti />
+
+<form>
+<div class="form-group">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Product Name</label>
+    <input type="email" value={productName} onChange={(e) => setProductName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product Name"/>
+  </div>
+
+  <div class="form-group" >
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Product Description</label>
+    <input type="email" value={description} onChange={(e) => setDescription(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product Description"/>
+  </div>
+
+  <div class="mb-2">
+  <label for="formFile" style={{marginBottom:'12px' , fontSize:'15px'}} class="form-label">Upload Image :</label>
+  <input id="images" onChange={imageHandler} disabled={hide} class="form-control" type="file" />
+  {image && <img style={{ height: "15%", width: "15%" , marginTop:'12px' , borderRadius:'9px' }} src={image} />}
+</div>
+
+{/* <div class="form-group" >
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Discount Price</label>
+    <input type="email" value={description} onChange={(e) => setDescription(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product Description"/>
+  </div>
+
+  <div class="form-group" >
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Weight</label>
+    <input type="email" value={description} onChange={(e) => setDescription(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product Description"/>
+  </div> */}
+
+
+  <div class="row" style={{marginBottom:'21px'}}>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Discount Price :</label>
+    <input type="number" value={discountPrice} onChange={(e)=>setDiscountPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Discount Price"/>
+    </div>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Weight : </label>
+    <input type="number" value={weight} onChange={(e)=>setWeight(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter weight"/>
+    </div>
+  </div>
+
+  <div class="row" style={{marginBottom:'21px'}}>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Length :</label>
+    <input type="number" value={length} onChange={(e)=>setLength(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Length"/>
+    </div>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Breadth : </label>
+    <input type="number" value={breadth} onChange={(e)=>setBreadth(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Breadth"/>
+    </div>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Height : </label>
+    <input type="number" value={height} onChange={(e)=>setHeight(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Height"/>
+    </div>
+  </div>
+
+
+  <div class="row" style={{marginBottom:'21px'}}>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Price :</label>
+    <input type="number" value={Price} onChange={(e)=>setPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Price"/>
+    </div>
+    <div class="col">
+    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Quantity : </label>
+    <input type="number" value={quantity} onChange={(e)=>setQuantity(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter quantity"/>
+    </div>
+  </div>
+
+
+
+  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addProduct} >Add Product</button>
+  </form>
+
+  </> :
+  null
+}
+
+
+
+
+
+
+
             </div>
     </>
   )
