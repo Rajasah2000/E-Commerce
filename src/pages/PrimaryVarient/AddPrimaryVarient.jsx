@@ -30,86 +30,201 @@ const LoginButton = styled(Button)`
   border-radius: 2px;
 `;
 const AddPrimaryVarient = () => {
-    const [varientType , setVarientType] = useState('');
-    const [varient , setVarient] = useState('');
+  // const [varientType, setVarientType] = useState("");
+  // const [varient, setVarient] = useState("");
+  const [subSubCategoryData, setSubSubCategoryData] = useState([]);
+  const [subSubCategoryId, setSubSubCategoryId] = useState("");
 
-const addVarient = async (e) => {
-  e.preventDefault()
+  const [varientData, setVarientData] = useState([
+    {
+      varientType: "",
+      varient: "",
+    },
+  ]);
+
+  useEffect(() => {
+    fetchSubSubCategory();
+  },[]);
+
+  const addVarient = async (e) => {
+    e.preventDefault();
+
     let data = {
-        varientType:varientType,
-        varient:varient
-    }
-    
-    if(varientType &&  varient){
-      let result = await HttpClient.requestData("add-varient" , "POST" , data);
+      subsubcatId: subSubCategoryId,
+      details: varientData,
+    };
+    console.log("VarData", data);
 
-      if(result && result?.status){
+    if (
+      subSubCategoryId &&
+      varientData[0].varientType != "" &&
+      varientData[0].varient != ""
+    ) {
+
+      let result = await HttpClient.requestData("add-varient", "POST", data);
+      console.log("VarientResult" , result);
+      if (result && result?.status) {
+        console.log("SSSSSSSSSSSSSSSSSSSS");
         toast.success(result.message);
-        setVarientType("");
-        setVarient("");
-      }else{
-        toast.error(result?.message)
+        // setSubSubCategoryId("");
+        // varientData[0].varientType
+        // setVarientData((prv) => prv.varientType == "");
+      } else {
+        toast.error(result?.message);
       }
-
-    }else{
+    } else {
       toast.error("All Fields Are Required");
     }
-    console.log("Varient" , data); 
-}
+    console.log("Varient", data);
+  };
+
+
+
+  const fetchSubSubCategory = async () => {
+    let result = await HttpClient.requestData("viewSubSubCategory", "GET");
+    
+    if (result && result.status) {
+      setSubSubCategoryData(result?.data);
+    } else {
+      toast.error("Failed to Fetch SubCategory Data");
+    }
+  };
+
+  const handleSubSubCategory = (e) => {
+    setSubSubCategoryId(e.target.value);
+
+  };
+
+  const changeHandler = (e, i) => {
+    setVarientData((prev) => {
+      let update = JSON.parse(JSON.stringify(prev));
+      update[i][e.target.name] = e.target.value;
+      return [...update];
+    });
+  };
 
   return (
-   <>
-          <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-        
-        <Header title="Add  Primary Varient "/>
-        {/* <Wrapper>
-          <TextField
-            style={{ paddingBottom: "32px" }}
-            type="text"
-            label="Varient Type"
-            value={varientType}
-            variant="filled"
-            onChange={(e) => setVarientType(e.target.value)}
-          />
+    <>
+      <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
+        <Header title="Add  Primary Varient " />
 
-            <TextField
-            style={{ paddingBottom: "32px" }}
-            type="text"
-            label="Varient "
-            value={varient}
-            variant="filled"
-            onChange={(e) => setVarient(e.target.value)}
-          />        
+        <label style={{ marginBottom: "12px", fontSize: "15px" }} for="cars">
+          Choose a sub sub category :
+        </label>
+        <select
+          style={{ marginBottom: "21px" }}
+          class="form-select"
+          aria-label="select category"
+          value={subSubCategoryId}
+          onChange={(e) => handleSubSubCategory(e)}
+        >
+          <option value={""}>Select a subSubCategory.......</option>
+          {subSubCategoryData.map((item) => {
+            return (
+              <option id={item?._id} value={item?._id}>
+                {item?.subSubCatName}
+              </option>
+            );
+          })}
+        </select>
 
-            <LoginButton variant="contained" onClick={addVarient} >
-              Add Varient
-            </LoginButton>
-        </Wrapper> */}
+        {varientData.map((item, i) => {
+          return (
+            <>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    marginBottom: "21px",
+                    border: "0.01px solid #dee2e6",
+                    width: "70%",
+                    padding: "13PX",
+                  }}
+                >
+                  <div class="form-group">
+                    <label
+                      for="exampleInputEmail1"
+                      style={{ marginBottom: "12px", fontSize: "15px" }}
+                    >
+                      Varient Type :{" "}
+                    </label>
+                    <input
+                      type="email"
+                      name="varientType"
+                      value={item.varientType}
+                      onChange={(e) => changeHandler(e, i)}
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Brand Name"
+                    />
+                  </div>
 
+                  <div class="form-group" style={{ marginBottom: "21px" }}>
+                    <label
+                      for="exampleInputEmail1"
+                      style={{ marginBottom: "12px", fontSize: "15px" }}
+                    >
+                      Varient :{" "}
+                    </label>
+                    <input
+                      type="email"
+                      name="varient"
+                      value={item.varient}
+                      onChange={(e) => changeHandler(e, i)}
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Brand Name"
+                    />
+                  </div>
+                </div>
 
-<form>
-<div class="form-group">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient Type : </label>
-    <input type="email" value={varientType} onChange={(e) => setVarientType(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
-  </div>
+                <button
+                  class="btn btn-danger"
+                  style={{ margin: "104px 88px", padding: "5px , 17px" }}
+                  onClick={() => {
+                    setVarientData((prv) => {
+                      let update = JSON.parse(JSON.stringify(prv))
+                      update.splice(i,1);
+                      return update;
+                    })
 
-  <div class="form-group" style={{marginBottom:'21px'}}>
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient : </label>
-    <input type="email" value={varient} onChange={(e) => setVarient(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
-  </div>
+                  }}
+                >
+                  -
+                </button>
+              </div>
+            </>
+          );
+        })}
 
-  <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addVarient}>Add Varient</button>
-  </form>
-
-
-
-
-
-
-
+        <button
+          class="btn btn-warning logout-btn"
+          onClick={() => {
+            setVarientData((prev) => {
+              let update = JSON.parse(JSON.stringify(prev));
+              update.push({
+                name: "",
+                age: "",
+              });
+              return [...update];
+            });
+          }}
+        >
+          +
+        </button>
       </div>
-   </>
-  )
-}
+   
+      <button
+        class="btn btn-primary"
+        style={{ backgroundColor: "rgb(3, 201, 215)" }}
+        onClick={addVarient}
+      >
+        Add Varient
+      </button>
 
-export default AddPrimaryVarient
+    </>
+  );
+};
+
+export default AddPrimaryVarient;

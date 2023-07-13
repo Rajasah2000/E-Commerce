@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import HttpClient from '../../components/HttpClient';
 // import ReactSelect from 'react-select'
 import Select from 'react-select';
+import { Padding } from '@mui/icons-material';
 
 
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
@@ -35,7 +36,8 @@ const AddProduct = () => {
     const [subSubCategoryData , setSubSubCategoryData] = useState([]);
     const [colorData , setColorData] = useState([]);
     const [brandData , setBrandData] = useState([]);
-    // const [variantData , setVarientData] = useState([]);
+    const [variantData , setVarientData] = useState([]);
+    const [multiple , setMultiple] = useState(false)
     // let variantData = [];
 
     const [selectedOption, setSelectedOption] = useState(null);
@@ -70,7 +72,16 @@ const AddProduct = () => {
     const [height , setHeight] = useState();
     const [Price , setPrice] = useState();
     const [quantity , setQuantity] = useState();
-    const [option,setOption]=useState([])
+    const [option,setOption]=useState([]);
+
+  let varientData = {
+    varientId:'',
+    price:'',
+    quantity:''
+
+  }
+
+    const [data , setData] = useState([{varientData}]);
 
 
 
@@ -179,14 +190,16 @@ const AddProduct = () => {
       console.log("ResultVarient", result);
       if(result && result.status){
 
-        let arr=[];
-        result.data.forEach(item => {
-          arr.push({
-            label:item.varient,
-            value:item._id
-          })
-        });
-        setOption(arr)
+        // let arr=[];
+        // result.data.forEach(item => {
+        //   arr.push({
+        //     label:item.varient,
+        //     value:item._id
+        //   })
+        // });
+        // setOption(arr)
+
+        setVarientData(result?.data);
 
 
       }else{
@@ -376,7 +389,7 @@ const AddProduct = () => {
 
 {
   hide3 ? <>
-          <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a Brand Name :</label>
+          <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a Brand :</label>
 <select class="form-select" aria-label="select category"  value={brandId} onChange={(e)=> setBrandId(e.target.value)}>
 <option value={''}>Select a brand.......</option>
     {brandData.map((item) => {
@@ -388,16 +401,14 @@ const AddProduct = () => {
 <div>
   
 </div>
-<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose Color Name :</label>
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose Color :</label>
 <Select  options={colorData} value={colorOption} onChange={setColorOption} isMulti />
           
-<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose Varient Name :</label>
-<Select  options={option} value={selectedOption}  onChange={setSelectedOption} isMulti />
 
 <form>
 <div class="form-group">
     <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Product Name</label>
-    <input type="email" value={productName} onChange={(e) => setProductName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product Name"/>
+    <input type="email" value={productName} onChange={(e) => setProductName(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Product"/>
   </div>
 
   <div class="form-group" >
@@ -433,33 +444,121 @@ const AddProduct = () => {
     </div>
   </div>
 
-  <div class="row" style={{marginBottom:'21px'}}>
-    <div class="col">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Length :</label>
-    <input type="number" value={length} onChange={(e)=>setLength(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Length"/>
-    </div>
-    <div class="col">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Breadth : </label>
-    <input type="number" value={breadth} onChange={(e)=>setBreadth(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Breadth"/>
-    </div>
-    <div class="col">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Height : </label>
-    <input type="number" value={height} onChange={(e)=>setHeight(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Height"/>
-    </div>
-  </div>
-
-
-  <div class="row" style={{marginBottom:'21px'}}>
-    <div class="col">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Price :</label>
-    <input type="number" value={Price} onChange={(e)=>setPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Price"/>
-    </div>
-    <div class="col">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Quantity : </label>
-    <input type="number" value={quantity} onChange={(e)=>setQuantity(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter quantity"/>
+  <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Box Size :</label>
+  <div style={{marginBottom:'21px' , border:'0.01px solid #dee2e6' , padding:'13PX'}}>
+    <div class="row" style={{marginBottom:'21px'}}>
+      <div class="col">
+      <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Length :</label>
+      <input type="number" value={length} onChange={(e)=>setLength(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Length"/>
+      </div>
+      <div class="col">
+      <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Breadth : </label>
+      <input type="number" value={breadth} onChange={(e)=>setBreadth(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Breadth"/>
+      </div>
+      <div class="col">
+      <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Height : </label>
+      <input type="number" value={height} onChange={(e)=>setHeight(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Height"/>
+      </div>
     </div>
   </div>
 
+
+<div style={{display:"flex" , flexDirection:'row' ,}}>
+  <div style={{  marginBottom:'21px' , border:'0.01px solid #dee2e6' , padding:'13PX'}}> 
+
+      <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a varient :</label>
+      <select class="form-select" aria-label="select category" value={categoryId} onChange={(e)=> handleCategory(e)}>
+      <option value={''}>Select a Varient.......</option>
+      {variantData.map((item , index) => {
+          return(
+            <option id={item?._id}  value={item?._id}>{item?.varient}</option>
+          )
+        })}
+      </select>
+
+      <div class="row" style={{marginBottom:'21px'}}>
+        <div class="col">
+        <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Price :</label>
+        <input type="number" value={Price} onChange={(e)=>setPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Price"/>
+        </div>
+        <div class="col">
+        <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Quantity : </label>
+        <input type="number" value={quantity} onChange={(e)=>setQuantity(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter quantity"/>
+        </div>
+      </div>
+</div>
+
+  <div onClick={() => setMultiple(true)}  style={{margin:'102px 77px' }}><svg style={{ height:'30px' ,  width:'30px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+  <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
+</svg>
+</div>
+  </div>
+{/* 
+  {
+    data.map((item , index) => {
+      return(
+        <>
+            <div style={{  marginBottom:'21px' , border:'0.01px solid #dee2e6' , padding:'13PX'}}> 
+
+<label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a varient :</label>
+<select class="form-select" aria-label="select category" value={categoryId} onChange={(e)=> handleCategory(e)}>
+<option value={''}>Select a Varient.......</option>
+{variantData.map((item , index) => {
+    return(
+      <option id={item?._id}  value={item?._id}>{item?.varient}</option>
+    )
+  })}
+</select>
+
+<div class="row" style={{marginBottom:'21px'}}>
+  <div class="col">
+  <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Price :</label>
+  <input type="number" value={Price} onChange={(e)=>setPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Price"/>
+  </div>
+  <div class="col">
+  <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Quantity : </label>
+  <input type="number" value={quantity} onChange={(e)=>setQuantity(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter quantity"/>
+  </div>
+</div>
+</div>
+        </>
+      )
+    })
+  
+  } */}
+
+{/* {
+  multiple ? <>
+    <div style={{display:"flex" , flexDirection:'row' ,}}>
+  <div style={{  marginBottom:'21px' , border:'0.01px solid #dee2e6' , padding:'13PX'}}> 
+
+      <label style={{marginBottom:'12px' , fontSize:'15px'}} for="cars">Choose a varient :</label>
+      <select class="form-select" aria-label="select category" value={categoryId} onChange={(e)=> handleCategory(e)}>
+      <option value={''}>Select a Varient.......</option>
+      {variantData.map((item , index) => {
+          return(
+            <option id={item?._id}  value={item?._id}>{item?.varient}</option>
+          )
+        })}
+      </select>
+
+      <div class="row" style={{marginBottom:'21px'}}>
+        <div class="col">
+        <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Price :</label>
+        <input type="number" value={Price} onChange={(e)=>setPrice(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Price"/>
+        </div>
+        <div class="col">
+        <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Quantity : </label>
+        <input type="number" value={quantity} onChange={(e)=>setQuantity(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter quantity"/>
+        </div>
+      </div>
+</div>
+
+  <div  style={{margin:'102px 77px' }}>
+</div>
+  </div>
+  </>:null
+} */}
 
 
   <button  class="btn btn-primary" style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addProduct} >Add Product</button>
@@ -468,12 +567,6 @@ const AddProduct = () => {
   </> :
   null
 }
-
-
-
-
-
-
 
             </div>
     </>
