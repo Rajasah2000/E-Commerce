@@ -19,6 +19,7 @@ import AddProduct from "./pages/Product/AddProduct";
 import ManageProduct from "./pages/Product/ManageProduct";
 import AddSecondaryVarient from "./pages/SecondaryVarient/AddSecondaryVarient";
 import ManageSecondaryVarient from "./pages/SecondaryVarient/ManageSecondaryVarient";
+import EditSecondaryVarient from "./pages/SecondaryVarient/EditSecondaryVarient"
 
 import AddColor from "./pages/Color/AddColor";
 import ManageColor from "./pages/Color/ManageColor";
@@ -160,7 +161,7 @@ const Dashboard = () => {
 
             <Route path="/add-secondary-varient" element={<AddSecondaryVarient/>}/>
             <Route path="/manage-secondary-varient" element={<ManageSecondaryVarient/>}/>
-            <Route path="/edit-secondary-varient" element={<ManageSecondaryVarient/>}/>
+            <Route path="/edit-secondary-varient" element={<EditSecondaryVarient/>}/>
 
             {/* pages  */}
             <Route path="/orders" element={<Orders />} />

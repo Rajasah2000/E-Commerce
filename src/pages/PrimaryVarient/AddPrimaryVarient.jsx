@@ -11,24 +11,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import { json } from "react-router-dom/dist";
 
-const Wrapper = styled(Box)`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 25px 35px;
-  & > div,padding-bottom: 12px;
-  & > button,
-  & > p {
-    margin-top: 20px;
-  }
-`;
-const LoginButton = styled(Button)`
-  text-transform: none;
-  background-color: rgb(3, 201, 215);
-  height: 48px;
-  border-radius: 2px;
-`;
 const AddPrimaryVarient = () => {
   // const [varientType, setVarientType] = useState("");
   // const [varient, setVarient] = useState("");
@@ -44,7 +28,7 @@ const AddPrimaryVarient = () => {
 
   useEffect(() => {
     fetchSubSubCategory();
-  },[]);
+  }, []);
 
   const addVarient = async (e) => {
     e.preventDefault();
@@ -60,15 +44,15 @@ const AddPrimaryVarient = () => {
       varientData[0].varientType != "" &&
       varientData[0].varient != ""
     ) {
-
       let result = await HttpClient.requestData("add-varient", "POST", data);
-      console.log("VarientResult" , result);
+      console.log("VarientResult", result);
       if (result && result?.status) {
         console.log("SSSSSSSSSSSSSSSSSSSS");
         toast.success(result.message);
-        // setSubSubCategoryId("");
+        setSubSubCategoryId("");
+        // setVarientData("");
         // varientData[0].varientType
-        // setVarientData((prv) => prv.varientType == "");
+        // set
       } else {
         toast.error(result?.message);
       }
@@ -78,11 +62,9 @@ const AddPrimaryVarient = () => {
     console.log("Varient", data);
   };
 
-
-
   const fetchSubSubCategory = async () => {
     let result = await HttpClient.requestData("viewSubSubCategory", "GET");
-    
+
     if (result && result.status) {
       setSubSubCategoryData(result?.data);
     } else {
@@ -92,7 +74,6 @@ const AddPrimaryVarient = () => {
 
   const handleSubSubCategory = (e) => {
     setSubSubCategoryId(e.target.value);
-
   };
 
   const changeHandler = (e, i) => {
@@ -155,7 +136,7 @@ const AddPrimaryVarient = () => {
                       class="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
-                      placeholder="Enter Brand Name"
+                      placeholder="Enter Varient Type"
                     />
                   </div>
 
@@ -174,25 +155,25 @@ const AddPrimaryVarient = () => {
                       class="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
-                      placeholder="Enter Brand Name"
+                      placeholder="Enter Varient"
                     />
                   </div>
                 </div>
-
-                <button
-                  class="btn btn-danger"
-                  style={{ margin: "104px 88px", padding: "5px , 17px" }}
-                  onClick={() => {
-                    setVarientData((prv) => {
-                      let update = JSON.parse(JSON.stringify(prv))
-                      update.splice(i,1);
-                      return update;
-                    })
-
-                  }}
-                >
-                  -
-                </button>
+                {i == 0 ? null : (
+                  <button
+                    class="btn btn-danger"
+                    style={{ margin: "104px 88px", padding: "5px , 17px" }}
+                    onClick={() => {
+                      setVarientData((prv) => {
+                        let update = JSON.parse(JSON.stringify(prv));
+                        update.splice(i, 1);
+                        return update;
+                      });
+                    }}
+                  >
+                    -
+                  </button>
+                )}
               </div>
             </>
           );
@@ -214,15 +195,15 @@ const AddPrimaryVarient = () => {
           +
         </button>
       </div>
-   
-      <button
-        class="btn btn-primary"
-        style={{ backgroundColor: "rgb(3, 201, 215)" }}
-        onClick={addVarient}
-      >
-        Add Varient
-      </button>
-
+      <form>
+        <button
+          class="btn btn-primary"
+          style={{ backgroundColor: "rgb(3, 201, 215)" }}
+          onClick={addVarient}
+        >
+          Add Varient
+        </button>
+      </form>
     </>
   );
 };

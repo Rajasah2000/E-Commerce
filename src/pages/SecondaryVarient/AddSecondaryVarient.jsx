@@ -11,98 +11,199 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
-
-const Wrapper = styled(Box)`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 25px 35px;
-  & > div,padding-bottom: 12px;
-  & > button,
-  & > p {
-    margin-top: 20px;
-  }
-`;
-const LoginButton = styled(Button)`
-  text-transform: none;
-  background-color: rgb(3, 201, 215);
-  height: 48px;
-  border-radius: 2px;
-`;
+import { json } from "react-router-dom/dist";
 
 const AddSecondaryVarient = () => {
+  const [subSubCategoryData, setSubSubCategoryData] = useState([]);
+  const [subSubCategoryId, setSubSubCategoryId] = useState("");
 
-    const [varientType , setVarientType] = useState('');
-    const [varient , setVarient] = useState('');
+  const [varientData, setVarientData] = useState([
+    {
+      varientType: "",
+      varient: "",
+    },
+  ]);
 
-const addVarient = async(e) => {
-  e.preventDefault();
+  useEffect(() => {
+    fetchSubSubCategory();
+  }, []);
+
+  const addVarient = async (e) => {
+    e.preventDefault();
+
     let data = {
-        varientType:varientType,
-        varient:varient
-    }
-    if(varientType &&  varient){
-      let result = await HttpClient.requestData("add-varientss" , "POST" , data);
+      subsubcatId: subSubCategoryId,
+      details: varientData,
+    };
+    console.log("VarData", data);
 
-      if(result && result?.status){
+    if (
+      subSubCategoryId &&
+      varientData[0].varientType != "" &&
+      varientData[0].varient != ""
+    ) {
+      let result = await HttpClient.requestData("view-Varientff", "POST", data);
+      console.log("VarientResult", result);
+      if (result && result?.status) {
+        console.log("SSSSSSSSSSSSSSSSSSSS");
         toast.success(result.message);
-        setVarientType("");
-        setVarient("");
-      }else{
-        toast.error(result?.message)
+        setSubSubCategoryId("");
+        // setVarientData("");
+        // varientData[0].varientType
+        // set
+      } else {
+        toast.error(result?.message);
       }
-
-    }else{
+    } else {
       toast.error("All Fields Are Required");
     }
-}
+    console.log("Varient", data);
+  };
+
+  const fetchSubSubCategory = async () => {
+    let result = await HttpClient.requestData("viewSubSubCategory", "GET");
+
+    if (result && result.status) {
+      setSubSubCategoryData(result?.data);
+    } else {
+      toast.error("Failed to Fetch SubCategory Data");
+    }
+  };
+
+  const handleSubSubCategory = (e) => {
+    setSubSubCategoryId(e.target.value);
+  };
+
+  const changeHandler = (e, i) => {
+    setVarientData((prev) => {
+      let update = JSON.parse(JSON.stringify(prev));
+      update[i][e.target.name] = e.target.value;
+      return [...update];
+    });
+  };
 
   return (
     <>
-    <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-        
-    <Header title="Add Secondary  Varient"/>
-    {/* <Wrapper>
-      <TextField
-        style={{ paddingBottom: "32px" }}
-        type="text"
-        label="Varient Type"
-        value={varientType}
-        variant="filled"
-        onChange={(e) => setVarientType(e.target.value)}
-      />
+      <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
+        <Header title="Add  Secondary Varient " />
 
-        <TextField
-        style={{ paddingBottom: "32px" }}
-        type="text"
-        label="Varient "
-        value={varient}
-        variant="filled"
-        onChange={(e) => setVarient(e.target.value)}
-      />        
+        <label style={{ marginBottom: "12px", fontSize: "15px" }} for="cars">
+          Choose a sub sub category :
+        </label>
+        <select
+          style={{ marginBottom: "21px" }}
+          class="form-select"
+          aria-label="select category"
+          value={subSubCategoryId}
+          onChange={(e) => handleSubSubCategory(e)}
+        >
+          <option value={""}>Select a subSubCategory.......</option>
+          {subSubCategoryData.map((item) => {
+            return (
+              <option id={item?._id} value={item?._id}>
+                {item?.subSubCatName}
+              </option>
+            );
+          })}
+        </select>
 
-        <LoginButton variant="contained" onClick={addVarient} >
+        {varientData.map((item, i) => {
+          return (
+            <>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    marginBottom: "21px",
+                    border: "0.01px solid #dee2e6",
+                    width: "70%",
+                    padding: "13PX",
+                  }}
+                >
+                  <div class="form-group">
+                    <label
+                      for="exampleInputEmail1"
+                      style={{ marginBottom: "12px", fontSize: "15px" }}
+                    >
+                      Varient Type :{" "}
+                    </label>
+                    <input
+                      type="email"
+                      name="varientType"
+                      value={item.varientType}
+                      onChange={(e) => changeHandler(e, i)}
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Varient Type"
+                    />
+                  </div>
+
+                  <div class="form-group" style={{ marginBottom: "21px" }}>
+                    <label
+                      for="exampleInputEmail1"
+                      style={{ marginBottom: "12px", fontSize: "15px" }}
+                    >
+                      Varient :{" "}
+                    </label>
+                    <input
+                      type="text"
+                      name="varient"
+                      value={item.varient}
+                      onChange={(e) => changeHandler(e, i)}
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter Varient"
+                    />
+                  </div>
+                </div>
+                {i == 0 ? null : (
+                  <button
+                    class="btn btn-danger"
+                    style={{ margin: "104px 88px", padding: "5px , 17px" }}
+                    onClick={() => {
+                      setVarientData((prv) => {
+                        let update = JSON.parse(JSON.stringify(prv));
+                        update.splice(i, 1);
+                        return update;
+                      });
+                    }}
+                  >
+                    -
+                  </button>
+                )}
+              </div>
+            </>
+          );
+        })}
+
+        <button
+          class="btn btn-warning logout-btn"
+          onClick={() => {
+            setVarientData((prev) => {
+              let update = JSON.parse(JSON.stringify(prev));
+              update.push({
+                name: "",
+                age: "",
+              });
+              return [...update];
+            });
+          }}
+        >
+          +
+        </button>
+      </div>
+      <form>
+        <button
+          class="btn btn-primary"
+          style={{ backgroundColor: "rgb(3, 201, 215)" }}
+          onClick={addVarient}
+        >
           Add Varient
-        </LoginButton>
-    </Wrapper> */}
+        </button>
+      </form>
+    </>
+  );
+};
 
-<form>
-<div class="form-group">
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient Type : </label>
-    <input type="email" value={varientType} onChange={(e) => setVarientType(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
-  </div>
-
-  <div class="form-group" style={{marginBottom:'21px'}}>
-    <label for="exampleInputEmail1" style={{marginBottom:'12px' , fontSize:'15px'}}>Varient : </label>
-    <input type="email" value={varient} onChange={(e) => setVarient(e.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Brand Name"/>
-  </div>
-
-  <button  class="btn btn-primary"  style={{backgroundColor:'rgb(3, 201, 215)'}} onClick={addVarient}>Add Varient</button>
-  </form>
-
-  </div>
-</>
-  )
-}
-
-export default AddSecondaryVarient
+export default AddSecondaryVarient;
